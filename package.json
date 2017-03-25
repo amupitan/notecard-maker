@@ -1,0 +1,16 @@
+{
+  "name": "notecard-maker",
+  "version": "1.0.0",
+  "description": "Creating notecard website using expressjs",
+  "main": "app/app.js",
+  "scripts": {
+    "start": "nodemon -e css,ejs,js,json --watch app"
+  },
+  "author": "Michielu Menning and Victor Amupitan",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "reload": "^1.1.1"
+  }
+}

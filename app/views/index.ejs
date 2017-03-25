@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Roux Meetups</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <header>
+        <div class="jumbotron hidden-xs">
+        </div>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <h1 style="color: white">Notecard-Maker</h1>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="maincontent">
+                    <article class="article">
+                        <h1 class="article-title">Create notecard to help you study!</h1>
+                        <p>Upload a text document with your notes and study away!</p>
+                    </article>
+                    <article class="rules">
+                        <h3>Rules are simple, follow these steps when writing text document:</h3>
+                        <li>Subject: underline </li>
+                        <li>Question and answers: Put them in quotes: ("") </li>
+                        <li>Separate questions and answers with a comma ":"</li>
+                    </article>
+                </div>
+            </div>
+            <aside class="col-sm-4">
+                <form action="upload.php" method="post" enctype="multipart/form-data">
+                    Select file to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                </form>
+                <input type="button" id="go_notes" value="Go" onclick=""></input>
+            </aside>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('go_notes').onclick = function() {
+        //Go to /notes
+    }
+</script>
+
+</html>
