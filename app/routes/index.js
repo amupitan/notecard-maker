@@ -4,10 +4,16 @@ var router =express.Router();
 
 
 router.get('/',function(request,response){
+  var dataFile = request.app.get('appData');
   response.send(`
       <h1>Welcome a </h1>
       <p>Some paragraph text</p>
 
       <script src="/reload/reload.js"></script>
     `);
+
+    response.render('index', {
+
+    })
 });
+module.export = router;

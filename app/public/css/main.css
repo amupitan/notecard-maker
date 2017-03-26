@@ -1,0 +1,29 @@
+#notecards{
+	color:black;
+	border-style: solid;
+	border-width: 2px 10px 4px 20px;
+	border-color: #0FD5F4;
+	min-width: 500px;
+	height: auto;
+}
+
+#question{
+	text-align: center;
+	font-size: 75px;
+	font-family: "Arial Black", Gadget, sans-serif;
+	padding-bottom: 40px;
+}
+#nextQ{
+	float:left;
+}
+
+#seeAnswer{
+	float:right;
+}
+
+input{
+	padding:5px;
+	border: 2px solid;
+	position: relative;
+
+}
