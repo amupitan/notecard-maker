@@ -2,9 +2,10 @@
 	color:black;
 	border-style: solid;
 	border-width: 2px 10px 4px 20px;
-	border-color: #0FD5F4;
+	border-color: #66777d;
 	min-width: 500px;
 	height: auto;
+	background-color: #FAFFB1;
 }
 
 #question{

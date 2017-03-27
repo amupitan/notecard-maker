@@ -13,7 +13,7 @@ app.use(express.static('app/public'));
 // app.use(require('./routes/notes'));
 
 app.get('/',function(request,response){
-    response.render('index');
+  response.render('index');
 });
 
 app.get('/notes', function(request,response){

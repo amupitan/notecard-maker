@@ -2,16 +2,16 @@ let note = document.getElementById('notecards');
 
 //These questions are only until we get the actual one passed in
 var notes = {
- "Subject" : "Random",
+ "Subject" : "Important facts",
  "Questions":{
    "1+1":"2",
    "Gadia's password":"Tuples",
-   "Value of PI":"3.1415926...",
+   "Value of PI":"300 calories",
    "Best NBA player":"Georges Niange",
    "Capital of Iowa":"Ames",
    "Least liked team in NBA":"Golden State",
    "Are all CA's lame?": "Yes",
-   "Shaeffer's baby is what?": "Program written in cpp",
+   "Shaeffer's baby is a what?": "Program written in cpp",
    "Easiest class at ISU":"COMS327"
  }
 }
@@ -45,6 +45,7 @@ next.onclick=function(){
   q.className = "que"
   q.innerHTML ="";
   q.innerHTML= quest;
+  document.getElementById('side').innerHTML = "Question";
 }
 
 let solution = document.getElementById('seeAnswer');
@@ -53,4 +54,11 @@ solution.onclick=function(){
   q.className = "sol";
   q.innerHTML ="";
   q.innerHTML= answ;
+  document.getElementById('side').innerHTML = "Answer";
+}
+
+let back = document.getElementById('back');
+back.onclick=function(){
+  console.log("hi");
+  location.href = "/"
 }
