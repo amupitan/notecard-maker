@@ -5,7 +5,7 @@
 #Sports
 ##Good sports
 $Soccer
-Soccer is a wonderful sport which is pretty much the *best sport in the world. It is played by *over 200 countries*(which is all the countries in the world).
+Soccer is a wonderful sport which is pretty much the *best* sport in the world. It is played by *over 200 countries*(which is all the countries in the world).
 
 Sizes of soccer balls: 1, 2, 3, 4, 5.
 
@@ -17,9 +17,9 @@ Players who play basketball:
 - Lebron James
 
 The best college basketball teams in the country according to rank include:
-1) Iowa State Cyclones
+1) Iowa State *Cyclones
 2) Gonzaga
-3) Kansas
+3. Kansas
 4) University of North Carolina
 
 ##Regular Sports

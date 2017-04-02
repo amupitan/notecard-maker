@@ -12,6 +12,8 @@ class NoteParser{
     this.note._meta = {};
     this.note.header = [];
     this.note.highlight = {};
+    this.note.parens = [];
+    this.note.lists = {};
     this.lines = note_data.split('\n').filter((line) => {
       return line.trim().length > 0 && !line.startsWith('//');
     });
@@ -39,22 +41,65 @@ class NoteParser{
         let highlight;
         for (let i = data.indexOf('*'); i < data.length && i != -1; ){
           let nxt_idx = data.indexOf('*', i + 1);
-          
           if (nxt_idx == -1){
             nxt_idx = data.indexOf(' ', i + 1);
             if (nxt_idx == -1) nxt_idx = data.length;
+          }else if (nxt_idx + 1 < data.length && data.charAt(nxt_idx + 1) === '('){
+            highlight = this.grammar['('](data, data.substring(i + 1, nxt_idx));
           }
           highlight = data.substring(i + 1, nxt_idx);
-          if (highlight.indexOf("(") !== -1){
-            //parse parenthesis
-          }
+          
           this.note.highlight[highlight] = this.topic;
           i = data.indexOf('*', nxt_idx + 1);
         }
-        return highlight;
+        return data.split('*').join('');
+      },
+      '(' : (data, subhead) => {
+        /*TODO: use infix/postfix to get a perfecr order*/
+        let result;
+        addParenLoop:
+        for (let i = data.indexOf('('); i < data.length && i != -1; i = data.indexOf('(', i + 1)){
+          let nxt_idx = data.indexOf(')');
+          if (nxt_idx == -1){
+            nxt_idx = data.length;
+          }
+          if (subhead === undefined){
+            subhead = data.substring(0, i);
+            for (let j = i - 1; j >= 0; j--){
+              if (data.charAt(j) === ' '){
+                subhead = data.substring(j + 1, i);
+                break;
+              }
+            }
+          }
+          let data_obj = {};
+          data_obj[subhead] = data.substring(i + 1, nxt_idx);
+          for (let paren of this.note.parens){
+            if (paren[Object.getOwnPropertyNames(paren)[0]] === data_obj[subhead]) {
+              subhead = undefined; //this is set to undefined sp new topics are generated for the parens after it
+              continue addParenLoop;
+            }
+          }
+          this.note.parens.push(data_obj);
+          subhead = undefined; //same as above
+        }
+        return true;
       },
       ':' : (data) => {
-        return true;
+        let idx;
+        if ((idx = data.indexOf(':')) === -1) return;
+        let topic = data.substring(0, idx);
+        this.note.lists[topic] = [];
+        if (idx == data.length - 1){
+          for (let i = this.pointer + 1; i < this.lines.length; i++){
+            if (this.lines[i].substr(0, 2) !== "- " && i != this.pointer + 1 && !Number.isInteger(parseInt(this.lines[i].charAt(0)))) break;//TODO move up
+            this.note.lists[topic].push(this.grammar['*'](this.lines[i]));
+          }
+        }else{
+          let strList = data.substring(idx + 1);
+          if (strList.charAt(strList.length - 1) === '.') strList = strList.substring(0, strList.length - 1);
+          this.note.lists[topic] = strList.split(',').map(item => {return item.trim()});
+        }
       }
     };
   }//constructor
@@ -76,9 +121,12 @@ class NoteParser{
       if (next.charAt(0) == '#'){
         this.grammar['#'](next, this.pointer);
       }else if (next.charAt(0) == '$'){
-        this.grammar['$'](next, this.pointer);
+        this.grammar.$(next, this.pointer);
       }else if (this.headerRef){
         this.grammar['*'](next);
+        this.grammar['('](next);
+        this.grammar[':'](next);
+        
         //call other grammars
       }
       
@@ -99,18 +147,27 @@ fs.readFile(filePath, 'UTF-8', (err, data) => {
     console.error(err);
   contents = data;
   // let firstline = contents.split("\n")[0];
-  let temp = "Soccer is a wonderful sport which is pretty much the *best sport in the world. It is played by *over 200 countries*(which is all the countries in the world).";
+  let temp = "Soccer is a wonderful sport which is pretty much the *best* sport in the world. It is played by *over 200 countries*(which is all the countries in the world).";
   let np = new NoteParser(contents);
   // console.log(np.grammar['#'](temp));
   np.parseMeta();
   np.parseHeaders();
   // console.log(np.grammar['*'](temp));
-  console.log(np.note.highlight);
-  // console.log(np.note.header);
+  // console.log(np.note.highlight);
+  // console.log("------------------\n");
+  // console.log(np.note.lists);
   console.log(np);
 
 });
 
 
 
-// console.log(`you know it`);
+
+/**NOTES:
+ * Topics in notes.highlight can be undefined
+ *
+ */
+ 
+/**MICH:
+ * Should the numbers and hyphens in lists be removed?
+ */
