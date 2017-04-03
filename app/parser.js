@@ -8,12 +8,15 @@ class NoteParser{
     this.pointer = 0;
     this.headerRef;
     this.topic;
-    this.note = {};
-    this.note._meta = {};
-    this.note.header = [];
-    this.note.highlight = {};
-    this.note.parens = [];
-    this.note.lists = {};
+    this.note = {
+      _meta : {},
+      header : [],
+      highlight : {},
+      parens : [],
+      lists : {},
+      plain : []
+    };
+    this.cards = [];
     this.lines = note_data.split('\n').filter((line) => {
       return line.trim().length > 0 && !line.startsWith('//');
     });
@@ -30,12 +33,12 @@ class NoteParser{
         dataObj[data.substr(i)] = lineNum;
         this.note.header[i].push(dataObj);
         this.note.header[i][this.note.header[i].length - 1] = {};
-        this.headerRef= this.note.header[i][this.note.header[i].length - 1];
+        this.headerRef = this.note.header[i][this.note.header[i].length - 1];
       },
       '$' : (data) => {
         this.topic = data.substr(1);
         this.headerRef[this.topic] = {};
-        this.headerRef= this.headerRef[this.topic];
+        this.headerRef = this.headerRef[this.topic];
       },
       '*' : (data) => {
         let highlight;
@@ -52,7 +55,7 @@ class NoteParser{
           this.note.highlight[highlight] = this.topic;
           i = data.indexOf('*', nxt_idx + 1);
         }
-        return data.split('*').join('');
+        return data.trim().split('*').join('');
       },
       '(' : (data, subhead) => {
         /*TODO: use infix/postfix to get a perfecr order*/
@@ -87,24 +90,45 @@ class NoteParser{
       },
       ':' : (data) => {
         let idx;
-        if ((idx = data.indexOf(':')) === -1) return;
+        if ((idx = data.indexOf(':')) === -1) return false;
         let topic = data.substring(0, idx);
         this.note.lists[topic] = [];
         if (idx == data.length - 1){
-          for (let i = this.pointer + 1; i < this.lines.length; i++){
+          let i = this.pointer;
+          for (i = this.pointer + 1; i < this.lines.length; i++){
             if (this.lines[i].substr(0, 2) !== "- " && i != this.pointer + 1 && !Number.isInteger(parseInt(this.lines[i].charAt(0)))) break;//TODO move up
             this.note.lists[topic].push(this.grammar['*'](this.lines[i]));
           }
+          this.pointer = i - 1;
         }else{
           let strList = data.substring(idx + 1);
           if (strList.charAt(strList.length - 1) === '.') strList = strList.substring(0, strList.length - 1);
           this.note.lists[topic] = strList.split(',').map(item => {return item.trim()});
+          return true;
         }
+        return true;
+      },
+      'plain' : (data) => {
+        let data_obj = {};
+        data_obj[data] = this.topic;
+        this.note.plain.push(data_obj);
       }
-    };
+    };//grammar object
   }//constructor
-  makeNotes(){
-    
+  makeNoteCards(highlight = true, parens = true, lists = true, plain = true){ /*TODO: split all in four so user can select what type of cards*/
+    /*Parens*/
+    this.cards = [...this.cards, ...this.note.parens.map(obj => {
+      return [Object.keys(obj)[0], obj[Object.keys(obj)[0]]];
+    })];
+    // /*Highlights and lists*/
+    this.cards = [...this.cards, ...[...Object.keys(this.note.highlight), ...Object.keys(this.note.lists)].map((key, idx, keys) => {
+      return (this.note.highlight.hasOwnProperty(key)) ? [this.note.highlight[key], key] : [key, this.note.lists[key]]; /*TODO: might not be good if highlights and lists have the same keys*/
+    })];
+    /*Plain*/
+    this.cards = [...this.cards, ...this.note.plain.map(obj => {
+      return [obj[Object.keys(obj)[0]], Object.keys(obj)[0]];
+    })];
+    // this.cards = [...this.cards, ...this.note.lists];
   }
   parseMeta(){
     this.pointer = 0;//TODO should this method reset the pointer member?
@@ -114,28 +138,21 @@ class NoteParser{
       next = this.lines[++this.pointer];
     }
   }
-  parseHeaders(){
+  parseNotes(){
     let idx = this.pointer;
     let next = this.lines[this.pointer];
     while(this.pointer < this.lines.length){
-      if (next.charAt(0) == '#'){
+      if (next.charAt(0) == '#'){/*TODO: headers doesn't work correctly*/
         this.grammar['#'](next, this.pointer);
       }else if (next.charAt(0) == '$'){
         this.grammar.$(next, this.pointer);
       }else if (this.headerRef){
-        this.grammar['*'](next);
+        let formatted = this.grammar['*'](next);
         this.grammar['('](next);
-        this.grammar[':'](next);
-        
-        //call other grammars
+        if (!this.grammar[':'](next))
+          this.grammar.plain(formatted);
       }
-      
       next = this.lines[++this.pointer];
-    }
-  }
-  parseTopics(){
-    for (let i = this.pointer; i < this.lines.length; i++){
-      
     }
   }
 }
@@ -151,12 +168,13 @@ fs.readFile(filePath, 'UTF-8', (err, data) => {
   let np = new NoteParser(contents);
   // console.log(np.grammar['#'](temp));
   np.parseMeta();
-  np.parseHeaders();
+  np.parseNotes();
   // console.log(np.grammar['*'](temp));
-  // console.log(np.note.highlight);
-  // console.log("------------------\n");
+  console.log(np.note.header[2]);
+  console.log("------------------\n");
   // console.log(np.note.lists);
-  console.log(np);
+  np.makeNoteCards();
+  console.log(np.cards);
 
 });
 
