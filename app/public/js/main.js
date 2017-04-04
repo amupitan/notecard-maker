@@ -1,64 +1,41 @@
 let note = document.getElementById('notecards');
+// var notes = [["over 200 countries", "which is all the countries in the world"], ["include", "mango, apple, oranges, ..."], ["Soccer", "best"], ["Soccer", "over 200 countries"], ["Basketball", "Cyclones"]];
+var notes;
 
-//These questions are only until we get the actual one passed in
-var notes = {
- "Subject" : "Important facts",
- "Questions":{
-   "1+1":"2",
-   "Gadia's password":"Tuples",
-   "Value of PI":"300 calories",
-   "Best NBA player":"Georges Niange",
-   "Capital of Iowa":"Ames",
-   "Least liked team in NBA":"Golden State",
-   "Are all CA's lame?": "Yes",
-   "Shaeffer's baby is a what?": "Program written in cpp",
-   "Easiest class at ISU":"COMS327"
- }
-}
-
-document.getElementById("sub").innerHTML = notes.Subject;
-
-var questions = notes.Questions;
-var quest;
-var answ;
-var numQuestion =0;
+// document.getElementById("sub").innerHTML = notes.Subject;/*TODO: get subject here*/
 var rand_num; //Question number
-for(let i in questions){numQuestion++}; //Get number of questions there are
-
-let next = document.getElementById('nextQ');
-next.onclick=function(){
-  //TO prevent same question back to back
-  let a;
-  do{
-     a = Math.floor((Math.random() * numQuestion));
-  } while (rand_num == a);
-  rand_num = a;
-
-  var iter = -1;
-  for(let i in questions){
-    quest = i;
-    answ = questions[i];
-    iter ++;
-    if(iter == rand_num) break;
+$.ajax({
+  url : "/notecards/",
+  data: {"course" : true},
+  success : function(res){
+    document.getElementById("sub").innerHTML = res;
   }
-  let q = document.getElementById('question');
-  q.className = "que"
-  q.innerHTML ="";
-  q.innerHTML= quest;
-  document.getElementById('side').innerHTML = "Question";
-}
+});
+let next = document.getElementById('nextQ');
+$.ajax({
+      url : "/notecards/",
+      data : {"name" : "notecards"},
+      success : function(res){
+        notes = res;
+        console.log(res);
+        next.onclick = () => {
+          let a;
+          do{
+             a = Math.floor((Math.random() * notes.length));
+          } while (rand_num == a);
+          rand_num = a;
+          document.getElementById('question').className = "que";
+          document.getElementById('question').innerHTML = notes[rand_num][0];
+          document.getElementById('side').innerHTML = "Question";
+        };
+        document.getElementById('seeAnswer').onclick = () => {
+          document.getElementById('question').className = "sol";
+          document.getElementById('question').innerHTML = notes[rand_num][1];
+          document.getElementById('side').innerHTML = "Answer";
+        };
+      }
+});
 
-let solution = document.getElementById('seeAnswer');
-solution.onclick=function(){
-  let q = document.getElementById('question');
-  q.className = "sol";
-  q.innerHTML ="";
-  q.innerHTML= answ;
-  document.getElementById('side').innerHTML = "Answer";
-}
-
-let back = document.getElementById('back');
-back.onclick=function(){
-  console.log("hi");
-  location.href = "/"
-}
+document.getElementById('back').onclick=function(){
+  location.href = "/";
+};

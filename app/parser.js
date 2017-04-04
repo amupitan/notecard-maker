@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var filePath = "data/test_note.txt";
+// var filePath = "./data/test_note.txt";
 
 class NoteParser{
   constructor(note_data){
@@ -116,20 +116,28 @@ class NoteParser{
     };//grammar object
   }//constructor
   makeNoteCards(highlight = true, parens = true, lists = true, plain = true){ /*TODO: split all in four so user can select what type of cards*/
+    this.cards = [];
     /*Parens*/
-    this.cards = [...this.cards, ...this.note.parens.map(obj => {
-      return [Object.keys(obj)[0], obj[Object.keys(obj)[0]]];
-    })];
+    if (parens){
+      this.cards = [...this.cards, ...this.note.parens.map(obj => {
+        return [Object.keys(obj)[0], obj[Object.keys(obj)[0]]];
+      })];
+    }
+    
     // /*Highlights and lists*/
-    this.cards = [...this.cards, ...[...Object.keys(this.note.highlight), ...Object.keys(this.note.lists)].map((key, idx, keys) => {
-      return (this.note.highlight.hasOwnProperty(key)) ? [this.note.highlight[key], key] : [key, this.note.lists[key]]; /*TODO: might not be good if highlights and lists have the same keys*/
-    })];
+    if (highlight || lists){
+      this.cards = [...this.cards, ...[...Object.keys(this.note.highlight), ...Object.keys(this.note.lists)].map((key, idx, keys) => {
+        return (this.note.highlight.hasOwnProperty(key)) ? [this.note.highlight[key], key] : [key, this.note.lists[key]]; /*TODO: might not be good if highlights and lists have the same keys*/
+      })];
+    }
+    
     /*Plain*/
-    this.cards = [...this.cards, ...this.note.plain.map(obj => {
-      return [obj[Object.keys(obj)[0]], Object.keys(obj)[0]];
-    })];
-    // this.cards = [...this.cards, ...this.note.lists];
-  }
+    if (plain){
+      this.cards = [...this.cards, ...this.note.plain.map(obj => {
+        return [obj[Object.keys(obj)[0]], Object.keys(obj)[0]];
+      })];
+    }
+      }
   parseMeta(){
     this.pointer = 0;//TODO should this method reset the pointer member?
     let next = this.lines[this.pointer];
@@ -155,30 +163,36 @@ class NoteParser{
       next = this.lines[++this.pointer];
     }
   }
+  parseResult(){
+    this.parseMeta();
+    this.parseNotes();
+    this.makeNoteCards();
+    return this.cards;
+  }
 }
 
 
-var contents;
-fs.readFile(filePath, 'UTF-8', (err, data) => {
-  if (err)
-    console.error(err);
-  contents = data;
-  // let firstline = contents.split("\n")[0];
-  let temp = "Soccer is a wonderful sport which is pretty much the *best* sport in the world. It is played by *over 200 countries*(which is all the countries in the world).";
-  let np = new NoteParser(contents);
-  // console.log(np.grammar['#'](temp));
-  np.parseMeta();
-  np.parseNotes();
-  // console.log(np.grammar['*'](temp));
-  console.log(np.note.header[2]);
-  console.log("------------------\n");
-  // console.log(np.note.lists);
-  np.makeNoteCards();
-  console.log(np.cards);
+// var contents;
+// fs.readFile(filePath, 'UTF-8', (err, data) => {
+//   if (err)
+//     console.error(err);
+//   contents = data;
+//   // let firstline = contents.split("\n")[0];
+//   let temp = "Soccer is a wonderful sport which is pretty much the *best* sport in the world. It is played by *over 200 countries*(which is all the countries in the world).";
+//   let np = new NoteParser(contents);
+//   // console.log(np.grammar['#'](temp));
+//   np.parseMeta();
+//   np.parseNotes();
+//   // console.log(np.grammar['*'](temp));
+//   console.log(np.note.header[2]);
+//   console.log("------------------\n");
+//   // console.log(np.note.lists);
+//   np.makeNoteCards();
+//   console.log(np.cards);
 
-});
+// });
 
-
+module.exports = NoteParser;
 
 
 /**NOTES:
