@@ -29,9 +29,5 @@ American football is played in the USA. It has an *ironic name*.
 #Food
 Ingredients of making a smoothie include(mango, apple, oranges, ...).
 //I don't want this part of the note to be read
-///I would hate it for the following lines to be read
-Twinkle twinkle little stars
-How I wonder what you are
-Up above the world so high///
 
 The are a lot of restaurants in Ames. Some of the good ones include the Mexican ones. Fuzzy's tacos is lit! There's also some not so good ones.

@@ -5,7 +5,7 @@ const fileUpload = require('express-fileupload');
 
 var NoteParser = require('./parser');
 const fs = require('fs');
-var filePath = "./app/data/test_note.txt";
+var filePath = "./app/data/note.txt";
 
 var dataFile = require('./data/notes.json');
 
@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 app.set('views','app/views');
 
 
-
+app.use(fileUpload());
 app.use(express.static('app/public'));
 // app.use(require('./routes/index'));
 // app.use(require('./routes/notes'));
@@ -49,6 +49,17 @@ app.get('/notecards', function(request,response){
         }
         
     });
+});
+
+app.post('/upload', function(req, res) {
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+  let noteFile = req.files.noteFile;
+  noteFile.mv("./app/data/note.txt", function(err) {
+    if (err)
+      return res.status(500).send(err);
+    res.render('notes');
+  });
 });
 
 

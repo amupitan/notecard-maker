@@ -1,5 +1,4 @@
 let note = document.getElementById('notecards');
-// var notes = [["over 200 countries", "which is all the countries in the world"], ["include", "mango, apple, oranges, ..."], ["Soccer", "best"], ["Soccer", "over 200 countries"], ["Basketball", "Cyclones"]];
 var notes;
 
 // document.getElementById("sub").innerHTML = notes.Subject;/*TODO: get subject here*/

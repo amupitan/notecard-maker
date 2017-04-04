@@ -1,6 +1,5 @@
-var fs = require('fs');
-var path = require('path');
-
+const fs = require('fs');
+const path = require('path');
 // var filePath = "./data/test_note.txt";
 
 class NoteParser{
@@ -193,13 +192,3 @@ class NoteParser{
 // });
 
 module.exports = NoteParser;
-
-
-/**NOTES:
- * Topics in notes.highlight can be undefined
- *
- */
- 
-/**MICH:
- * Should the numbers and hyphens in lists be removed?
- */

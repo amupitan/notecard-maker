@@ -1,0 +1,12 @@
+!CLASS: HD FS 101
+#Animals
+$Cats
+Types of cats:
+- Big cats
+- Small cats
+- Medium size cats
+
+$Dogs
+Types of dogs:
+- Big dogs
+- Small dogs

@@ -38,33 +38,15 @@
                 </div>
             </div>
             <aside class="col-sm-4">
-                <form action="upload.php" method="post" enctype="multipart/form-data">
+                <form action="upload" method="post" enctype="multipart/form-data">
                     Select file to upload:
-                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="file" name="noteFile" id="fileToUpload" />
+                    <input type="submit" id="go_notes" value="Go" onclick="" />
                 </form>
-                <input type="button" id="go_notes" value="Go" onclick=""></input>
+                
             </aside>
         </div>
     </div>
 </body>
-<script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
-  <script>
-    $.ajax({
-      url : "/notecards/",
-      data : {"name" : "notecards"},
-      success : function(res){
-        console.log(res);
-      }
-    });
-  </script>
-<script>
-    document.getElementById('go_notes').onclick = function() {
-      location.href = "/notes"
-        //Go to /notes
-    }
-</script>
 
 </html>
