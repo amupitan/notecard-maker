@@ -46,7 +46,7 @@ app.get('/notecards', function(request,response){
           np.makeNoteCards(true, true, true, false);
           response.json(np.parseResult());
         }
-        
+
     });
 });
 
