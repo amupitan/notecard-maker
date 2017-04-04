@@ -47,7 +47,7 @@ app.get('/notecards', function(request,response){
           response.json(np.parseResult());
           // console.log(np);
         }
-        
+
     });
 });
 
