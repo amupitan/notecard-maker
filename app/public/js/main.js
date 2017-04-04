@@ -1,7 +1,6 @@
 let note = document.getElementById('notecards');
 var notes;
 
-// document.getElementById("sub").innerHTML = notes.Subject;/*TODO: get subject here*/
 var rand_num; //Question number
 $.ajax({
   url : "/notecards/",
@@ -16,21 +15,20 @@ $.ajax({
       data : {"name" : "notecards"},
       success : function(res){
         notes = res;
-        console.log(res);
         next.onclick = () => {
-          let a;
+          let next_num;
           do{
-             a = Math.floor((Math.random() * notes.length));
-          } while (rand_num == a);
-          rand_num = a;
+             next_num = Math.floor((Math.random() * notes.length));
+          } while (rand_num == next_num);
+          rand_num = next_num;
           document.getElementById('question').className = "que";
           document.getElementById('question').innerHTML = notes[rand_num][0];
-          document.getElementById('side').innerHTML = "Question";
+          document.getElementById('side').innerHTML = "Title";
         };
         document.getElementById('seeAnswer').onclick = () => {
           document.getElementById('question').className = "sol";
           document.getElementById('question').innerHTML = notes[rand_num][1];
-          document.getElementById('side').innerHTML = "Answer";
+          document.getElementById('side').innerHTML = "Description";
         };
       }
 });

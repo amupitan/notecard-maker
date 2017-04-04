@@ -33,11 +33,11 @@ app.get('/notes', function(request,response){
 app.get('/notecards', function(request,response){
   // console.log(request);
     fs.readFile(filePath, 'UTF-8', (err, data) => {
-        console.log(request.query);
+        // console.log(request.query);
         if (err) console.error(err);
         var np = new NoteParser(data);
-        if (request.query.course !== undefined) {
-          console.log(np.note._meta);
+        if (request.query.course === 'true') {
+          np.parseMeta();
           if (np.note._meta !== undefined)
             response.json(np.note._meta.CLASS);
           else response.json("");
@@ -45,7 +45,6 @@ app.get('/notecards', function(request,response){
         else{
           np.makeNoteCards(true, true, true, false);
           response.json(np.parseResult());
-          // console.log(np);
         }
         
     });
