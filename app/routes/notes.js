@@ -2,7 +2,10 @@ var express = require('express');
 var router =express.Router();
 
 router.get('/notes', function(request, response){
-
+	// app.get('/notes', function(request,response){
+	//   // console.log(request);
+	//   response.render('notes');
+	// });
 	response.render('notes', {
 			// questionTag: ${questions},
 			// questionObj: quest,
@@ -12,4 +15,4 @@ router.get('/notes', function(request, response){
   // response.render('notes');
 });
 
-module.export = router;
+module.exports = router;

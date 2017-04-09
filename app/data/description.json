@@ -1,0 +1,39 @@
+{
+  "KeyCharacters":[{
+      "Character":"Exclamation Mark",
+      "Value": "!",
+      "Description": "The exclamation mark​ can be used to store metadata about the notes but will not be part of the note. This part is not required in the notes but if used must be written before the real note to be parsed.",
+      "Example": "!DATE: Jan 1 1970 !CLASS: SE 319",
+      "Example_Description":"This stores the date and class and metadata describing the note to be parsed."
+	 } ,{
+      "Character":"Pound Sign",
+      "Value":"#",
+      "Description":"The pound sign​ is used to specify headers and subheaders. A main header can be specified by one pound sign and subsequent headers can be specified by increasing the number of pound signs accordingly.",
+      "Example":"#Programming Languages ##JavaScript",
+      "Example_Description":"This parses ‘Programming Languages’ as a header and ‘JavaScript’ as a sub-header."
+    },{
+      "Character":"Dollar Sign",
+      "Value":"$",
+      "Description":"The dollar sign​ is used to specify specific topics. It is not required but can be used to make more detailed notes which leads to more detailed note-cards.",
+      "Example":"$ECMAScript EcmaScript is popularly known as JavaScript.",
+      "Example_Description":"This parses ECMAScript as the topic for the sentence below it and other subsequent sentences till the next topic, header or end of note."
+    },{
+      "Character":"Asterisk",
+      "Value":"*",
+      "Description":"The asterisk​ is used to specify importance. It can be used in two different contexts (both specifying importance). The two ways are to mark a word as important and to mark a phrase as important. When two asterisks wrap a phrase, the phrase is marked as important. When a single asterisk is placed before a word, the word is marked as important. The single asterisk style cannot be used multiple times on the same line except it is the last occurrence on that line.",
+      "Example":"JavaScript is a core aspect of *web development*. It makes *server side coding less complex.",
+      "Example_Description":"In the first example, web development is marked as an important phrase. In the second example, server is marked as an important word."
+    },{
+      "Character": "Colon/Hyphen/Comma",
+      "Value":":  -  ,",
+      "Description":"The colon​ can be used in conjunction with the hyphen​ or comma​ to specify lists. When the colon is used with commas, the list is parsed as words after the colon which use a comma delimiter and ends on a new line (if a period is present at the end of the line, it’ll be ignored). When the colon is used with hyphens, the colon must appear as the last character on a line before the new line, and the lines after it must start with a either, a hyphen and a space followed by the content of the list, or a number and a space followed the content of the list.",
+      "Example":"A few data types in JavaScript include: number, string, object. Some languages used in web development are: - JavaScript - CSS - HTML The most popular client side javascript frameworks include: 1) React.js 2) Vue.js  3) Angular.js 2",
+      "Example_Description":"In the first example, number, string and object are parsed as a list that pairs with ‘data types in JavaScript’. In the second example, The JavaScript, CSS and HTML are parsed as a list that associate with ‘languages used in web development’. In the last example, The list is parsed just like with hyphens but the numbers are preserved."
+    },{
+      "Character":"Parentheses",
+      "Value":"()",
+      "Description":"Parentheses​ are used to specify associations (like definitions). A pair of parentheses followed by a word associates the word with the content within the parentheses. It can be used to associate words with their definitions while taking notes. It can also be used with asterisks​ to associate a the content within the parentheses with a phrase instead of just a word.",
+      "Example":"Node.js is used asynchronously(an action is performed based on a signal from another action).  JavaScript is a *programming language*(a language used to program a computer).",
+      "Example_Description":"In the first example, ‘asynchronously’ is parsed as an association with the phrase in the parentheses. In the second example, ‘programming language’ is parsed as an association with the content within the parentheses."
+    }]
+}

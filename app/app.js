@@ -2,33 +2,29 @@ const express = require('express');
 const reload = require('reload');
 const app = express();
 const fileUpload = require('express-fileupload');
+var dataFile = require('./data/description.json');
 
 var NoteParser = require('./parser');
 const fs = require('fs');
 var filePath = "./app/data/note.txt";
 
-var dataFile = require('./data/notes.json');
-
 app.set('port', process.env.PORT || 3000);
-app.set('appData', dataFile); //Making dataFile available to all the other files
+app.set('appData', dataFile);
 app.set('view engine', 'ejs');
 app.set('views','app/views');
+// app.set('appData', dataFile); //Making dataFile available to all the other files
 
 
+
+app.use(require('./routes/documentation'));
+app.use(require('./routes/notes'));
+app.use(require("./routes/index"));
+app.use(require('./routes/notecards'));
 app.use(fileUpload());
 app.use(express.static('app/public'));
+
 // app.use(require('./routes/index'));
 // app.use(require('./routes/notes'));
-
-app.get('/',function(request,response){
-  // console.log(request);
-  response.render('index');
-});
-
-app.get('/notes', function(request,response){
-  // console.log(request);
-  response.render('notes');
-});
 
 app.get('/notecards', function(request,response){
   // console.log(request);
@@ -46,9 +42,10 @@ app.get('/notecards', function(request,response){
           np.makeNoteCards(true, true, true, false);
           response.json(np.parseResult());
         }
-
     });
 });
+
+
 
 app.post('/upload', function(req, res) {
   if (!req.files)

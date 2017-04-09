@@ -2,12 +2,16 @@
 <html>
 
 <head>
-    <title>Notecard-Maker</title>
+    <title>Notecard-Maker - </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
 </head>
 
 <body>
+  <header>
+    <% include partials/header.ejs %>
+
+  </header>
     <div id="notecards">
       <input type="button" value="NEXT" id="nextQ" onclick="">
       <input type="button" value="FLIP NOTE CARD" id="seeAnswer" onclick="">
@@ -20,7 +24,7 @@
 
 
     </div>
-    <input type="button" value="BACK" id="back" onclick="">
+    <!-- <input type="button" value="BACK" id="back" onclick=""> -->
 </body>
 <script
   src="https://code.jquery.com/jquery-3.2.1.js"

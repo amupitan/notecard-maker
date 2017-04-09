@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notecard-Maker-<%=pageTitle%></title>
+    <%include partials/head.ejs%>
+</head>
+
+<body>
+	<header>
+			<% include partials/header.ejs %>
+	</header>
+	<div class="container">
+		<div class ="row">
+        <div class="col-sm-8" id="info" value ="">
+					<%= info %>
+				</div>
+		</div>
+	</div>
+</body>
+<!-- <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+<script src="./js/main.js"></script> -->
+<!-- <script>
+
+
+  var wrapper = document.getElementById('info');
+    var xml_string = wrapper.innerHTML;
+      console.log(xml_string);
+  var div = document.createElement('div');
+  div.innerHTML=xml_string;
+  wrapper.appendChild(div)
+  wrapper.innerHTML="HI";
+  wrapper.innerHTML=xml_string;
+</script> -->
+
+</html>

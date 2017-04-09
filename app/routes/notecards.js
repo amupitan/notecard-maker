@@ -2,6 +2,7 @@ var express = require('express');
 var router =express.Router();
 
 router.get('/notes', function(request, response){
+  
   console.log('notecards.js');
 	response.render('notes', {
 			// questionTag: ${questions},
@@ -10,4 +11,4 @@ router.get('/notes', function(request, response){
 	});
 });
 
-module.export = router;
+module.exports = router;

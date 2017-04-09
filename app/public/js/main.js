@@ -24,6 +24,7 @@ $.ajax({
           document.getElementById('question').className = "que";
           document.getElementById('question').innerHTML = notes[rand_num][0];
           document.getElementById('side').innerHTML = "Title";
+          console.log("NEXT");
         };
         document.getElementById('seeAnswer').onclick = () => {
           document.getElementById('question').className = "sol";
@@ -33,6 +34,6 @@ $.ajax({
       }
 });
 
-document.getElementById('back').onclick=function(){
-  location.href = "/";
-};
+// document.getElementById('back').onclick=function(){
+//   location.href = "/";
+// };
