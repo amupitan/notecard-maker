@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notecard-Maker-<%=pageTitle%></title>
+    <%include partials/head.ejs%>
+</head>
+
+<body>
+	<header>
+			<% include partials/header.ejs %>
+	</header>
+	<div class="container">
+		<div class ="row">
+        <div class="col-sm-8" >
+					<form>
+						<div class="form-group">
+							<label for="username">Username: </label>
+							<input type="username" class="form-control" id="usr">
+							<label for="email">Email Address: </label>
+							<input type="email" class="form-control" id="email">
+							<label for="pwd">Password: </label>
+							<input type="password" class="form-control" id="pwd">
+							<label for="pwd">Repeat Password: </label>
+							<input type="password" class="form-control" id="pwd2">
+						</div>
+						<input type="submit" class="btn btn-primary" id="signup"></input>
+					</form>
+				</div>
+		</div>
+	</div>
+</body>
+</html>

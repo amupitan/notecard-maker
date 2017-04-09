@@ -14,12 +14,12 @@ app.set('view engine', 'ejs');
 app.set('views','app/views');
 // app.set('appData', dataFile); //Making dataFile available to all the other files
 
-
-
 app.use(require('./routes/documentation'));
 app.use(require('./routes/notes'));
 app.use(require("./routes/index"));
-app.use(require('./routes/notecards'));
+// app.use(require('./routes/notecards'));
+app.use(require("./routes/signup"));
+app.use(require("./routes/login"));
 app.use(fileUpload());
 app.use(express.static('app/public'));
 
@@ -46,7 +46,6 @@ app.get('/notecards', function(request,response){
 });
 
 
-
 app.post('/upload', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
@@ -57,7 +56,6 @@ app.post('/upload', function(req, res) {
     res.render('notes');
   });
 });
-
 
 var server = app.listen(app.get('port'), function(){ //Port listening to, and callback
   console.log('Listening to port ' + app.get('port'));

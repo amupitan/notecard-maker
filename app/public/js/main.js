@@ -34,6 +34,10 @@ $.ajax({
       }
 });
 
+let login = document.getElementById('login');
+
+
+let signup= document.getElementById('signup');
 // document.getElementById('back').onclick=function(){
 //   location.href = "/";
 // };
