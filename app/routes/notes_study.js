@@ -1,15 +1,15 @@
 var express = require('express');
 var router =express.Router();
 
-router.get('/notes', function(request, response){
+router.get('/notes_study', function(request, response){
 	// app.get('/notes', function(request,response){
 	//   // console.log(request);
 	//   response.render('notes');
 	// });
-	response.render('notes', {
+	response.render('notes_study', {
 			// questionTag: ${questions},
 			// questionObj: quest,
-			aa: 'aa'
+			pageTitle:"Study"
 	});
 
   // response.render('notes');

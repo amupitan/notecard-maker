@@ -2,7 +2,9 @@
 <html>
 
 <head>
-    <title>Notecard-Maker - </title>
+    <title>Notecard-Maker -  </title>
+    <%include partials/head.ejs%>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
 </head>
@@ -13,16 +15,14 @@
 
   </header>
     <div id="notecards">
-      <input type="button" value="NEXT" id="nextQ" onclick="">
-      <input type="button" value="FLIP NOTE CARD" id="seeAnswer" onclick="">
+      <input type="button"  class="btn btn-info" value="NEXT" id="nextQ" onclick=""></input>
+      <input type="button" class="btn btn-info" value="FLIP NOTE CARD" id="seeAnswer" onclick=""></input>
       <br/>
         <h1 id="sub"><h1>
         <h3 id="side"></h3>
         <article id="question">
           Click next to start viewing notecards
         </article>
-
-
     </div>
     <!-- <input type="button" value="BACK" id="back" onclick=""> -->
 </body>

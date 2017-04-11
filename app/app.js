@@ -15,7 +15,8 @@ app.set('views','app/views');
 // app.set('appData', dataFile); //Making dataFile available to all the other files
 
 app.use(require('./routes/documentation'));
-app.use(require('./routes/notes'));
+app.use(require('./routes/notes_study'));
+app.use(require('./routes/notes_select'));
 app.use(require("./routes/index"));
 // app.use(require('./routes/notecards'));
 app.use(require("./routes/signup"));
@@ -23,8 +24,6 @@ app.use(require("./routes/login"));
 app.use(fileUpload());
 app.use(express.static('app/public'));
 
-// app.use(require('./routes/index'));
-// app.use(require('./routes/notes'));
 
 app.get('/notecards', function(request,response){
   // console.log(request);
@@ -45,7 +44,6 @@ app.get('/notecards', function(request,response){
     });
 });
 
-
 app.post('/upload', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
@@ -53,7 +51,7 @@ app.post('/upload', function(req, res) {
   noteFile.mv("./app/data/note.txt", function(err) {
     if (err)
       return res.status(500).send(err);
-    res.render('notes');
+      res.render('notes_study');
   });
 });
 

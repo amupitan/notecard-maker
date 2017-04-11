@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notecard-Maker -<%=pageTitle %> </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="./css/main.css"> -->
+		<%include partials/head.ejs%>
+
+</head>
+
+<body>
+  <header>
+    <% include partials/header.ejs %>
+  </header>
+	<div class="container">
+		<div class ="row">
+        <div class="col-sm-12" id="ntc_sel_1" >
+				</div>
+		</div>
+    <input type="button" class="btn btn-info" value="Uncheck All" id="uncheck" onclick="" >
+
+		<input type="button" class="btn btn-info" value="Study" id="go_study" onclick="" >
+
+	</div>
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous">
+	</script>
+  <script>
+  window.onload =function(){
+    let select = document.getElementById('ntc_sel_1');
+    $.ajax({
+          url : "/notecards/",
+          data : {"name" : "notecards"},
+          success : function(res){
+            console.log(typeof(res));
+            console.log(res);
+              res.forEach(function(n, i){
+                let panel = document.createElement('div');
+                panel.setAttribute('class', 'well well-sm col-xs-3');
+                panel.setAttribute('id', `box-${i}`);
+                select.appendChild(panel);
+                let check=document.createElement('input');
+                check.setAttribute("type", "checkbox");
+                check.setAttribute("checked", "true");
+                panel.appendChild(check);
+                let front=document.createElement('p');
+                front.innerHTML=n[0] + ": ";
+                panel.appendChild(front);
+                let back=document.createElement('p');
+                back.innerHTML=n[1];
+                panel.appendChild(back);
+              });
+          }
+    });
+  }
+  document.getElementById('go_study').onclick=function(){
+    let num_elements=document.getElementById('ntc_sel_1').childNodes;
+    console.log(num_elements);
+      for(let i =1; i<num_elements.length;i++){
+        let num =i-1;
+        let el = document.getElementById(`box-${num}`).childNodes;
+        if(el[0].checked){
+          console.log("Hi");
+        }
+      }
+  }
+  document.getElementById('uncheck').onclick=function(){
+    let num_elements=document.getElementById('ntc_sel_1').childNodes;
+    console.log(num_elements);
+      for(let i =1; i<num_elements.length;i++){
+        let num = i-1;
+        let el = document.getElementById(`box-${num}`).childNodes;
+        el[0].setAttribute('checked','false');
+      }
+  }
+  </script>
+</html>
