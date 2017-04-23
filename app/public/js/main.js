@@ -30,7 +30,21 @@ var notes;
           };
           document.getElementById('seeAnswer').onclick = () => {
             document.getElementById('question').className = "sol";
-            document.getElementById('question').innerHTML = notes[rand_num][1];
+            let card_flip = notes[rand_num][1];
+            if (typeof card_flip === "object"){
+              let temp = card_flip;
+              card_flip = document.createElement('ol');
+              for (let item of temp){
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(item));
+                card_flip.appendChild(li);
+              }
+              document.getElementById('question').appendChild(card_flip);
+            }else{
+              document.getElementById('question').innerHTML = card_flip;
+            }
+            // document.getElementById('question').appendChild(card_flip);//notes[rand_num][1];
+            // document.getElementById('question').innerHTML = notes[rand_num][1];
             document.getElementById('side').innerHTML = "Description";
           };
         }
