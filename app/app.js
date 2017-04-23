@@ -7,6 +7,7 @@ var dataFile = require('./data/description.json');
 var NoteParser = require('./parser');
 const fs = require('fs');
 var filePath = "./app/data/note.txt";
+var bodyParser = require('body-parser'); //Parse through req
 
 app.set('port', process.env.PORT || 3000);
 app.set('appData', dataFile);
@@ -24,6 +25,7 @@ app.use(require("./routes/login"));
 app.use(fileUpload());
 app.use(express.static('app/public'));
 
+app.use(bodyParser());
 
 app.get('/notecards', function(request,response){
   // console.log(request);
@@ -54,6 +56,27 @@ app.post('/upload', function(req, res) {
       res.render('notes_study');
   });
 });
+
+app.post(
+      '/upload_textArea',
+      // form(field('noteText').trim().required()),
+      function(req, res) {
+        if (!req.body.noteText)
+          return res.status(400).send('No text in textbox.');
+        else{
+        //   console.log("Text: ", req.body.noteText);
+        // }
+        let noteText = req.body.noteText;
+        var fs=require('fs');
+        fs.writeFile("./app/data/note.txt", noteText, function(err){
+        // noteText.mv("./app/data/note.txt", function(err) {
+          if (err)
+            return res.status(500).send(err);
+            res.render('notes_study');
+        });
+      }
+    });
+
 
 var server = app.listen(app.get('port'), function(){ //Port listening to, and callback
   console.log('Listening to port ' + app.get('port'));

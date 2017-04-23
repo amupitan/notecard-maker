@@ -18,6 +18,10 @@
                         <p>Upload a text document with your notes and study away!</p>
                     </article>
                 </div>
+                <form action="upload_textArea" method="post" enctype="multipart/form-data">
+                  <textarea id=textArea rows='4' cols='60' name="noteText"></textarea>
+                  <input type="submit" id="go_notes_txtArea" value="Go" onclick="" />
+              </form>
             </div>
             <aside class="col-sm-4">
                 <form action="upload" method="post" enctype="multipart/form-data">
@@ -32,3 +36,16 @@
 </body>
 
 </html>
+
+<script>
+let go_button = document.getElementById('go_notes_txtArea');
+go_button.onclick = function(){
+  let text = document.getElementById('textArea');
+  if(textArea.value.trim()){
+    console.log(textArea.value.trim());
+
+  } else {
+    console.log("no content");
+  }
+};
+</script>
