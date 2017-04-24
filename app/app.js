@@ -7,10 +7,9 @@ const fs = require('fs');
 const NoteParser = require('./parser');
 
 const filePath = "./app/data/note.txt";
-var bodyParser = require('body-parser'); //Parse through req
+const bodyParser = require('body-parser'); //Parse through req
 
 app.set('port', process.env.PORT || 3000);
-// app.set('appData', dataFile);
 app.set('view engine', 'ejs');
 app.set('views','app/views');
 // app.set('appData', dataFile); //Making dataFile available to all the other files
@@ -19,6 +18,10 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 app.use(require('./routes/documentation'));
 app.use(require('./routes/notes_study'));
 app.use(require('./routes/notes_select'));
@@ -30,7 +33,7 @@ app.use(require("./routes/home"));
 app.use(fileUpload());
 app.use(express.static('app/public'));
 
-app.use(bodyParser());
+
 
 app.get('/notecards', function(request,response){
   // console.log(request);

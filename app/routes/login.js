@@ -5,7 +5,10 @@ const db = require("../../models/db.js");
 const router = express.Router();
 
 
-router.use(bodyParser());
+router.use(bodyParser.urlencoded({
+  extended: true
+}));
+router.use(bodyParser.json());
 
 router.post('/login', function(request, response){
   let userData = {username: request.body.username, password: request.body.password};

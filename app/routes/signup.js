@@ -3,7 +3,10 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const db = require("../../models/db.js");
 
-router.use(bodyParser());
+router.use(bodyParser.urlencoded({
+  extended: true
+}));
+router.use(bodyParser.json());
 
 router.get('/signup', function(request, response){
 	response.render('signup', {
