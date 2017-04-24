@@ -2,7 +2,6 @@ const express = require('express');
 const reload = require('reload');
 const app = express();
 const fileUpload = require('express-fileupload');
-// var dataFile = require('./data/description.json');
 const session = require('express-session');
 const fs = require('fs');
 const NoteParser = require('./parser');
