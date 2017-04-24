@@ -33,8 +33,8 @@ class database{
         
       }else{
         //TODO: correctly use errors
-        userInfo.result = {errno : -1, message: "username is already used"};
-        console.log(userInfo.result);
+        callback({name: "dberror", errno : -1, message: "username is already used"}, null);
+        // console.log(userInfo.result);
       }
     });
   }
@@ -47,18 +47,22 @@ class database{
       }
       if (user !== null){
         bcrypt.compare(userData.password, user.password, function(err, res) {
+          if (err) {
+            callback(err, user);
+            return;
+          }
           if(res){
             callback(null, user);
           }else{
             //TODO: correctly use errors
             console.log({errno: -3, message: "Incorrect username/password"});
-            // callback({errno: -3, message: "Incorrect username/password"}, null);
+            callback({name: "dberror", errno: -3, message: "Incorrect username/password"}, null);
           }
         });
       }else{
         //TODO: correctly use errors
         console.log({errno: -2, message: "Incorrect username/password"});
-        // callback({errno: -2, message: "Incorrect username/password"}, null);
+        callback({name: "dberror", errno: -2, message: "Incorrect username/password"}, null);
       }
     });
   }
@@ -69,13 +73,12 @@ class database{
 }
 
 
-
 // var new_user = new User({ first_name: 'John', last_name: 'Doe', username: 'mich', password: 'mich' });
 let temp_user = { first_name: 'John', last_name: 'Doe', username: 'michelu', password: 'mich' };
 // database.addUser(temp_user);
-database.login({username : 'michelua', password: 'mich'}, function(err, res){
-  if (err) throw err;
-    console.log(res);
-});
+// database.login({username : 'michelua', password: 'mich'}, function(err, res){
+//   if (err) throw err;
+//     console.log(res);
+// });
 
 module.exports = database;
