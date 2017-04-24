@@ -18,9 +18,9 @@
         <div class="col-sm-12" id="ntc_sel_1" >
 				</div>
 		</div>
-    <input type="button" class="btn btn-info" value="Uncheck All" id="uncheck" onclick="" >
-
-		<input type="button" class="btn btn-info" value="Study" id="go_study" onclick="" >
+    <input type="button" class="btn btn-info" value="Uncheck All" onclick="checkAll(false)" id="uncheck" >
+    <input type="button" class="btn btn-info" value="Check All" onclick="checkAll(true)"id="check" >
+		<input type="button" class="btn btn-info" value="Study" id="go_study" onclick="compile_checked()" >
 
 	</div>
 </body>
@@ -45,7 +45,7 @@
                 select.appendChild(panel);
                 let check=document.createElement('input');
                 check.setAttribute("type", "checkbox");
-                check.setAttribute("checked", "true");
+                // check.setAttribute("checked", "false");
                 panel.appendChild(check);
                 let front=document.createElement('p');
                 front.innerHTML=n[0] + ": ";
@@ -57,25 +57,29 @@
           }
     });
   }
-  document.getElementById('go_study').onclick=function(){
+  function checkAll(check){
     let num_elements=document.getElementById('ntc_sel_1').childNodes;
-    console.log(num_elements);
-      for(let i =1; i<num_elements.length;i++){
-        let num =i-1;
-        let el = document.getElementById(`box-${num}`).childNodes;
-        if(el[0].checked){
-          console.log("Hi");
-        }
-      }
-  }
-  document.getElementById('uncheck').onclick=function(){
-    let num_elements=document.getElementById('ntc_sel_1').childNodes;
-    console.log(num_elements);
       for(let i =1; i<num_elements.length;i++){
         let num = i-1;
         let el = document.getElementById(`box-${num}`).childNodes;
-        el[0].setAttribute('checked','false');
+        if(el[0].checked != check){
+          el[0].click();
+        }
       }
   }
+  function compile_checked(){
+    // var sides ={}
+    let num_elements=document.getElementById('ntc_sel_1').childNodes;
+      for(let i =1; i<num_elements.length;i++){
+        let num = i-1;
+        let el = document.getElementById(`box-${num}`).childNodes;
+        if(el[0].checked == true){
+          console.log("front: " + el[0].parentNode.childNodes[1].innerHTML + " back: " + el[0].parentNode.childNodes[2].innerHTML);
+          // sides.
+        }
+      }
+      action="upload";
+  }
+
   </script>
 </html>
