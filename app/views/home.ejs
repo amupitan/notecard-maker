@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notecard-Maker-<%=pageTitle%></title>
+    <style>
+      .options{
+        width: 400px;
+        height: 400px;
+        background-color: blue;
+      }
+    </style>
+    <%include partials/head.ejs%>
+</head>
+
+<body>
+	<header>
+			<% include partials/header.ejs %>
+	</header>
+	<div class="container">
+	  <nav>
+		  <!--side nav bar-->
+		</nav>
+		<div class ="row">
+        <div class="col-sm-8" >
+					<h1><%=pageTitle%></h1>
+					<h1>Welcome <%=username%></h1>
+				</div>
+				
+		</div>
+		<section class="">
+		  <div class="row">
+  	    <div class="col-sm-offset-2 col-sm-4 options">
+  	      <p>Notes: <%=numnotes%></p>
+  	    </div>
+        <div class="col-sm-offset-1 col-sm-4 options">
+  	      <p>Email <%=email%></p>
+  	    </div>
+      </div>
+		</section>
+	</div>
+</body>
+</html>

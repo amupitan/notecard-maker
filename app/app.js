@@ -3,8 +3,9 @@ const reload = require('reload');
 const app = express();
 const fileUpload = require('express-fileupload');
 // var dataFile = require('./data/description.json');
-const NoteParser = require('./parser');
+const session = require('express-session');
 const fs = require('fs');
+const NoteParser = require('./parser');
 
 const filePath = "./app/data/note.txt";
 var bodyParser = require('body-parser'); //Parse through req
@@ -14,7 +15,11 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 app.set('views','app/views');
 // app.set('appData', dataFile); //Making dataFile available to all the other files
-
+app.use(session({
+  secret: 'I have a dream',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(require('./routes/documentation'));
 app.use(require('./routes/notes_study'));
 app.use(require('./routes/notes_select'));
@@ -22,6 +27,7 @@ app.use(require("./routes/index"));
 // app.use(require('./routes/notecards'));
 app.use(require("./routes/signup"));
 app.use(require("./routes/login"));
+app.use(require("./routes/home"));
 app.use(fileUpload());
 app.use(express.static('app/public'));
 
@@ -73,6 +79,16 @@ app.post('/upload_textArea', function(req, res) {
         });
       }
     });
+    
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 
 var server = app.listen(app.get('port'), function(){ //Port listening to, and callback

@@ -11,18 +11,25 @@
 			<% include partials/header.ejs %>
 	</header>
 	<div class="container">
+	  <div class="row">
+	    <%=errors%>
+	  </div>
 		<div class ="row">
         <div class="col-sm-8" >
-					<form>
+					<form method="POST" action="/signup/">
 						<div class="form-group">
+						  <label for="firstname">First Name: </label>
+							<input type="username" class="form-control" id="usr" name="first_name">
+							<label for="username">Last Name: </label>
+							<input type="username" class="form-control" id="usr" name="last_name">
 							<label for="username">Username: </label>
-							<input type="username" class="form-control" id="usr">
+							<input type="username" class="form-control" id="usr" name="username">
 							<label for="email">Email Address: </label>
-							<input type="email" class="form-control" id="email">
+							<input type="email" class="form-control" id="email" name="email">
 							<label for="pwd">Password: </label>
-							<input type="password" class="form-control" id="pwd">
+							<input type="password" class="form-control" id="pwd" name="password">
 							<label for="pwd">Repeat Password: </label>
-							<input type="password" class="form-control" id="pwd2">
+							<input type="password" class="form-control" id="pwd2" name="rpassword">
 						</div>
 						<input type="submit" class="btn btn-primary" id="signup"></input>
 					</form>

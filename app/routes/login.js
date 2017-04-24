@@ -1,8 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const bodyParser = require('body-parser');
-router.use(bodyParser());
 const db = require("../../models/db.js");
+
+const router = express.Router();
+
+
+router.use(bodyParser());
 
 router.post('/login', function(request, response){
   let userData = {username: request.body.username, password: request.body.password};
@@ -13,11 +16,14 @@ router.post('/login', function(request, response){
     		pageTitle:"Login",
     		errors : err.message
     	});
-      // response.end();
+
     }else{
-      response.render('userhome', {
+      request.session.username = user.username;
+      response.render('home', {
         username: user.username,
-  			pageTitle: `Welcome ${user.username}`
+  			pageTitle: `Welcome ${user.username}`,
+  			email: user.email,
+  			numnotes: user.note_ids.length
       });
     }
     

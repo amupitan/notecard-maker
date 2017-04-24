@@ -18,16 +18,20 @@ class database{
   constructor(){
     
   }
+  static getUser(user_name, callback){
+   User.find({username: user_name}, callback); 
+  }
   
   static addUser(userInfo, callback){
     User.count({username : userInfo.username}, function(err, count){
-      if (err) throw err;
+      if (err) console.error(err);
       if (count === 0){
         bcrypt.hash(userInfo.password, 10, function(err, hash){
           userInfo.password = hash;
           User.create(userInfo, (err, new_user) => {
-            if (err) throw err;
+            if (err) console.error(err);
             console.log(new_user);
+            callback(err, new_user);//TODO: might not want to return user
           });
         });
         

@@ -8,7 +8,8 @@ const UserSchema = Schema(
     last_name: {type: String, required: true, max: 100},
     username: {type: String, required: true, max: 100},
     password: {type: String, required: true, min: 4},//TODO: change to 6
-    date_of_birth: {type: Date},
+    email: {type: String, required: true, max: 100},
+    date_joined: {type: Date},
     note_ids: [],
     test_ids: []
   }
