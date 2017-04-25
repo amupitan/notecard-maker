@@ -1,9 +1,9 @@
-var express = require('express');
-var router =express.Router();
+const express = require('express');
+const router = express.Router();
+const dataFile = require('../data/description.json');
 
 
 router.get('/documentation',function(request,response){
-  var dataFile = request.app.get('appData');
   var info='';
   dataFile.KeyCharacters.forEach(function(item){
     info+=`

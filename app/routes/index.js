@@ -6,7 +6,7 @@ var router =express.Router();
 router.get('/',function(request,response){
   // var dataFile = request.app.get('appData');
     response.render('index', {
-      pateTitle: "Home",
+      pageTitle: "Home",
       pageID: "home"
     });
 });
