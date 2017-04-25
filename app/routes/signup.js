@@ -31,7 +31,15 @@ router.post('/signup', function(request, response){
     		errors : err.message
     	});
     }else{
-      response.send("<h1>Account Created</h1><a href=\"/login\">Login<a/>");
+      response.render('login', {
+    		pageTitle:"Login",
+    		errors : false,
+    		signup : {
+    		  pre : "Congratulations!",
+    		  message : "You have successfully signed up! Login with your credentials",
+    		  type : "success",
+    		}
+    	});
     }
   });
 

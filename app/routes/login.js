@@ -17,7 +17,8 @@ router.post('/login', function(request, response){
     if (err){
       response.render('login', {
     		pageTitle:"Login",
-    		errors : err.message
+    		errors : err.message,
+    		signup : false
     	});
 
     }else{
@@ -39,6 +40,7 @@ router.get('/login', function(request, response){
 	response.render('login', {
 		pageTitle:"Login",
 		errors: false,
+		signup : false,
 	});
 });
 
