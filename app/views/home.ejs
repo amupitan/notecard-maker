@@ -3,41 +3,41 @@
 
 <head>
     <title>Notecard-Maker-<%=pageTitle%></title>
-    <style>
-      .options{
-        width: 400px;
-        height: 400px;
-        background-color: blue;
-      }
-    </style>
     <%include partials/head.ejs%>
+    <link rel="stylesheet" href="/css/home.css" type="text/css">
 </head>
 
 <body>
 	<header>
 			<% include partials/header.ejs %>
 	</header>
-	<div class="container">
-	  <nav>
-		  <!--side nav bar-->
-		</nav>
-		<div class ="row">
-        <div class="col-sm-8" >
-					<h1><%=pageTitle%></h1>
-					<h1>Welcome <%=username%></h1>
-				</div>
-				
-		</div>
-		<section class="">
-		  <div class="row">
-  	    <div class="col-sm-offset-2 col-sm-4 options">
-  	      <p>Notes: <%=numnotes%></p>
-  	    </div>
-        <div class="col-sm-offset-1 col-sm-4 options">
-  	      <p>Email <%=email%></p>
-  	    </div>
+  <div class="container">
+    <nav>
+      <!--side nav bar-->
+    </nav>
+    <div class ="row">
+      <div class="col-sm-offset-2 col-sm-8 " >
+        <h1>Welcome <%= username %></h1>
       </div>
-		</section>
-	</div>
+    </div>
+    <section class="col-xs-offset-4 col-sm-offset-0 col-lg-offset-1">
+      <div class="row ">
+        <div class="col-sm-offset-2 col-sm-4 options top-buffer-xs">
+          <a href="/upload" class="no-highlight"><p class="h2 box-header">Upload Notes</p></a>
+        </div>
+        <div class="left-buffer col-sm-4 options top-buffer-xs">
+          <a href="/notes" class="no-highlight"><p class="h2 box-header">View Notecards</p></a>
+        </div>
+      </div>
+      <div class="row  top-buffer">
+        <div class="col-sm-offset-2 col-sm-4 options top-buffer-xs">
+          <a href="/study" class="no-highlight"><p class="h2 box-header">Study & Tests</p></a>
+        </div>
+        <div class="left-buffer col-sm-4 options top-buffer-xs">
+          <a href="/account" class="no-highlight"><p class="h2 box-header">Account</p></a>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
