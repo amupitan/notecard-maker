@@ -22,6 +22,7 @@ router.post('/login', function(request, response){
 
     }else{
       request.session.username = user.username;
+      if (request.body.remember) request.session.cookie.maxAge = 30 * 86400000; //30 days
       response.render('home', {
         username: user.username,
   			pageTitle: `Welcome ${user.username}`,
@@ -37,7 +38,7 @@ router.post('/login', function(request, response){
 router.get('/login', function(request, response){
 	response.render('login', {
 		pageTitle:"Login",
-		errors: null,
+		errors: false,
 	});
 });
 

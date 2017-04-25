@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 router.get('/signup', function(request, response){
 	response.render('signup', {
 			pageTitle:"Sign up",
-			errors: null
+			errors: false,
 	});
 });
 

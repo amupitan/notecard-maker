@@ -4,6 +4,7 @@
 <head>
     <title>Notecard-Maker-<%=pageTitle%></title>
     <%include partials/head.ejs%>
+    <link rel="stylesheet" href="/css/form.css" type="text/css">
 </head>
 
 <body>
@@ -11,9 +12,11 @@
 			<% include partials/header.ejs %>
 	</header>
 	<div class="container">
-	  <div class="row">
-	    <%=errors%>
-	  </div>
+	  <% if (errors) { %>
+      <div class="errors">
+	      <%=errors%>
+	    </div>
+    <% } %>
 		<div class ="row">
         <div class="col-sm-8" >
 					<form method="POST" action="/signup/">

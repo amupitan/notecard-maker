@@ -4,6 +4,7 @@
 <head>
     <title>Notecard-Maker-<%=pageTitle%></title>
     <%include partials/head.ejs%>
+    <link rel="stylesheet" href="/css/form.css" type="text/css">
 </head>
 
 <body>
@@ -11,22 +12,31 @@
 			<% include partials/header.ejs %>
 	</header>
 	<div class="container">
-		<div class ="row">
-        <div class="col-sm-8" >
-					<form method="POST" action="login">
-						<div class="form-group">
-							<label for="username">Username: </label>
-							<input type="username" class="form-control" id="usr" name="username">
-							<label for="pwd">Password: </label>
-							<input type="password" class="form-control" id="pwd" name="password">
-						</div>
-						<div class="errors">
-					    <%=errors%>
-					  </div>
-						<input type="submit" class="btn btn-primary" id="login"></input>
-					</form>
-				</div>
-		</div>
-	</div>
+   <div class ="row top-buffer">
+      <div class="col-md-offset-3 col-sm-8 col-md-6" >
+        <p class="h2">Sign in</p>
+        <form method="POST" action="/login">
+          <div class="form-group">
+             <label for="username">Username: </label>
+             <input type="username" class="form-control" id="usr" name="username">
+             <label for="pwd">Password: </label>
+             <input type="password" class="form-control" id="pwd" name="password">
+          </div>
+          <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" name="remember">
+          <span class="custom-control-description">Remember me</span>
+          </label>
+          <% if (errors) { %>
+            <div class="errors">
+				      <%=errors%>
+				    </div>
+          <% } %>
+          <br />
+          <input type="submit" class="btn btn-primary" id="login" value="Login">
+        </form>
+        <small class="form-text text-muted">Don't have an account? <a href="/signup">Register!</a></small>
+      </div>
+   </div>
+  </div>
 </body>
 </html>
