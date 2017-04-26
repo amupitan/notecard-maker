@@ -4,11 +4,17 @@ const db = require("../../models/db.js");
 
 const router = express.Router();
 
-
 router.use(bodyParser.urlencoded({
   extended: true
 }));
 router.use(bodyParser.json());
+
+router.all('/login', (req, res, next) => {
+  if (req.session.username)
+    res.redirect('/home');
+  else
+    next();
+});
 
 router.post('/login', function(request, response){
   let userData = {username: request.body.username, password: request.body.password};

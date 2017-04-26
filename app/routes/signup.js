@@ -8,6 +8,13 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
+router.all('/signup', (req, res, next) => {
+  if (req.session.username)
+    res.redirect('/home');
+  else
+    next();
+});
+
 router.get('/signup', function(req, res){
 	if (req.session.username) res.redirect('/home');
 	res.render('signup', {
