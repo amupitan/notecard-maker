@@ -8,37 +8,43 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.get('/signup', function(request, response){
-	response.render('signup', {
+router.get('/signup', function(req, res){
+	if (req.session.username) res.redirect('/home');
+	res.render('signup', {
 			pageTitle:"Sign up",
 			errors: false,
+			loggedIn : req.session.username,
 	});
 });
 
-router.post('/signup', function(request, response){
-  //TODO: validations on all requests
-  if (request.body.password !== request.body.rpassword){
-    response.render('signup', {
+router.post('/signup', function(req, res){
+  //TODO: validations on all reqs
+		if (req.session.username) res.redirect('/home');
+  if (req.body.password !== req.body.rpassword){
+    res.render('signup', {
     		pageTitle:"Sign Up",
-    		errors : "The passwords don't match"
+    		errors : "The passwords don't match",
+    		loggedIn : req.session.username,
     	});
   }
-  let userData = {username: request.body.username, password: request.body.password, email: request.body.email, first_name: request.body.first_name, last_name: request.body.last_name};
-  db.addUser(userData, function(err, res){
+  let userData = {username: req.body.username, password: req.body.password, email: req.body.email, first_name: req.body.first_name, last_name: req.body.last_name};
+  db.addUser(userData, function(err, result){
     if(err){
-      response.render('signup', {
+      res.render('signup', {
     		pageTitle:"Sign Up",
-    		errors : err.message
+    		errors : err.message,
+    		loggedIn : req.session.username,
     	});
     }else{
-      response.render('login', {
+      res.render('login', {
     		pageTitle:"Login",
     		errors : false,
     		signup : {
     		  pre : "Congratulations!",
     		  message : "You have successfully signed up! Login with your credentials",
     		  type : "success",
-    		}
+    		},
+    		loggedIn : req.session.username,
     	});
     }
   });

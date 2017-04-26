@@ -33,28 +33,28 @@ app.use(require("./routes/home"));
 // app.use(express.static('app/public'));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/notecards', function(request,response){
+app.get('/notecards', function(req,res){
     fs.readFile(filePath, 'UTF-8', (err, data) => {
-        // console.log(request.query);
+        // console.log(req.query);
         if (err) console.error(err);
         var np = new NoteParser(data);
-        if (request.query.course === 'true') {
+        if (req.query.course === 'true') {
           np.parseMeta();
           if (np.note._meta !== undefined)
-            response.json(np.note._meta.CLASS);
-          else response.json("");
+            res.json(np.note._meta.CLASS);
+          else res.json("");
         }
         else{
           np.makeNoteCards(true, true, true, false);
-          response.json(np.parseResult());
+          res.json(np.parseResult());
         }
     });
 });
 
-
 app.get('/create', (req, res) => {
   res.render('notes_upload', {
 		errors : false,
+		loggedIn : req.session.username //TODO: this should always be true since the user has to be logged in 
 	});
 });
 
@@ -62,25 +62,31 @@ app.post('/upload_textArea', function(req, res) {
         if (!req.body.noteText)
           return res.status(400).send('No text in textbox.');
         else{
-        //   console.log("Text: ", req.body.noteText);
-        // }
-        let noteText = req.body.noteText;
-        var fs=require('fs');
-        fs.writeFile("./app/data/note.txt", noteText, function(err){
-        // noteText.mv("./app/data/note.txt", function(err) {
-          if (err)
-            return res.status(500).send(err);
-            res.render('notes_study');
-        });
-      }
+          let noteText = req.body.noteText;
+          var fs=require('fs');
+          fs.writeFile("./app/data/note.txt", noteText, function(err){
+            if (err)
+              return res.status(500).send(err);
+              res.redirect('/notes_select');
+          });
+        }
     });
-    
+
 app.get('/logout',function(req,res){
   req.session.destroy(function(err) {
     if(err) {
       console.log(err);
     } else {
-      res.redirect('/');
+      res.render('login', {
+        pageTitle:"Login",
+        errors : false,
+        signup : {
+          pre : null,
+          message : "You have successfully signed up! Login with your credentials",
+          type : "info",
+        },
+        loggedIn : false
+      });
     }
   });
 });

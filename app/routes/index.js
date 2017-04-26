@@ -3,11 +3,12 @@ var express = require('express');
 var router =express.Router();
 
 
-router.get('/',function(request,response){
-  // var dataFile = request.app.get('appData');
-    response.render('index', {
+router.get('/',function(req,res){
+  // var dataFile = req.app.get('appData');
+    res.render('index', {
       pageTitle: "Home",
-      pageID: "home"
+      pageID: "home",
+      loggedIn : req.session.username,
     });
 });
 module.exports = router;

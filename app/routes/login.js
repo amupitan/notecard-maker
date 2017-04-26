@@ -18,7 +18,8 @@ router.post('/login', function(request, response){
       response.render('login', {
     		pageTitle:"Login",
     		errors : err.message,
-    		signup : false
+    		signup : false,
+    		loggedIn : request.session.username
     	});
 
     }else{
@@ -28,7 +29,8 @@ router.post('/login', function(request, response){
         username: user.username,
   			pageTitle: `Welcome ${user.username}`,
   			email: user.email,
-  			numnotes: user.note_ids.length
+  			numnotes: user.note_ids.length,
+  			loggedIn : request.session.username
       });
     }
     
@@ -41,6 +43,7 @@ router.get('/login', function(request, response){
 		pageTitle:"Login",
 		errors: false,
 		signup : false,
+		loggedIn : request.session.username
 	});
 });
 

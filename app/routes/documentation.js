@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dataFile = require('../data/description.json');
 
-
-router.get('/documentation',function(request,response){
+router.get('/documentation',function(req,res){
   var info='';
   dataFile.KeyCharacters.forEach(function(item){
     info+=`
@@ -16,21 +15,10 @@ router.get('/documentation',function(request,response){
       </div>
     `;
   });
-  response.render('documentation', {
+  res.render('documentation', {
     pageTitle: "Documentation",
-        // rules:`<h1>RULES</h1>`,
-    info: `${info}`
+    info: `${info}`,
+    loggedIn : req.session.username,
   });
-
-    // response.send(`
-    //   <h1>RULES</h1>
-    //   ${info}
-    //   `);
-  // app.get('/documentation', function(req, res){
-  //   res.sendFile()
-  //   res.render('documentation');
-  // });
-
-
 });
 module.exports = router;

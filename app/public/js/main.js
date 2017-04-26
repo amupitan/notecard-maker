@@ -29,8 +29,9 @@ var notes;
             // console.log("NEXT");
           };
           document.getElementById('seeAnswer').onclick = () => {
-            document.getElementById('question').className = "sol";
-            let card_flip = notes[rand_num][1];
+            document.getElementById('question').className = (notes[rand_num][1] === document.getElementById('question').innerHTML ? "que" : "sol");
+            // if(notes[rand_num][1] ===  document.getElementById('question').innerHTML)
+            let card_flip =(notes[rand_num][1] ===  document.getElementById('question').innerHTML ? notes[rand_num][0] : notes[rand_num][1]);
             if (typeof card_flip === "object"){
               let temp = card_flip;
               card_flip = document.createElement('ol');
@@ -45,19 +46,9 @@ var notes;
             }
             // document.getElementById('question').appendChild(card_flip);//notes[rand_num][1];
             // document.getElementById('question').innerHTML = notes[rand_num][1];
-            document.getElementById('side').innerHTML = "Description";
+            document.getElementById('side').innerHTML =(notes[rand_num][1] != document.getElementById('question').innerHTML ? "Title" : "Description");
           };
         }
   });
-
-// let login = document.getElementById('login');
-// let signup= document.getElementById('signup');
-
-
-
-  document.getElementById('go_study').onclick=function(){
-
-    location.href = "/notes_study/";
-  };
 
 }

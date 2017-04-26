@@ -8,10 +8,9 @@
 			    <ul class="nav navbar-nav">
 			      <li><a href="documentation">Documentation</a></li>
 			    </ul>
-
 					<ul class="nav navbar-nav navbar-right">
-			      <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			       <li><a href="/<%= loggedIn ? 'home' : 'signup'%>"><span class="glyphicon glyphicon-<%= loggedIn ? 'home' : 'user'%>"></span><%= loggedIn ? 'Home' : 'Sign Up'%></a></li>
+			      <li><a href="/<%= loggedIn ? 'logout' : 'login'%>"><span class="glyphicon glyphicon-log-<%= loggedIn ? 'out' : 'in'%>"></span> <%= loggedIn ? 'Logout' : 'Login'%></a></li>
 			    </ul>
 		</div>
 </nav>
