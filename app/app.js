@@ -1,10 +1,9 @@
 const express = require('express');
 const reload = require('reload');
-const app = express();
-const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const fs = require('fs');
 const NoteParser = require('./parser');
+const app = express();
 
 const filePath = "./app/data/note.txt";
 const bodyParser = require('body-parser'); //Parse through req
@@ -22,8 +21,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(fileUpload());
 app.use(require('./routes/documentation'));
+app.use(require('./routes/notes_upload'));
 app.use(require('./routes/notes_study'));
 app.use(require('./routes/notes_select'));
 app.use(require("./routes/index"));
@@ -52,15 +51,11 @@ app.get('/notecards', function(request,response){
     });
 });
 
-app.post('/upload', function(req, res) {
-  if (!req.files)
-    return res.status(400).send('No files were uploaded.');
-  let noteFile = req.files.noteFile;
-  noteFile.mv("./app/data/note.txt", function(err) {
-    if (err)
-      return res.status(500).send(err);
-      res.render('notes_study');
-  });
+
+app.get('/create', (req, res) => {
+  res.render('notes_upload', {
+		errors : false,
+	});
 });
 
 app.post('/upload_textArea', function(req, res) {
