@@ -46,7 +46,7 @@ router.post('/signup', function(req, res){
       res.render('login', {
     		pageTitle:"Login",
     		errors : false,
-    		signup : {
+    		alertBox : {
     		  pre : "Congratulations!",
     		  message : "You have successfully signed up! Login with your credentials",
     		  type : "success",

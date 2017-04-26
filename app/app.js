@@ -73,6 +73,11 @@ app.post('/upload_textArea', function(req, res) {
     });
 
 app.get('/logout',function(req,res){
+  let alertMessage = req.session.username ? {
+          pre : null,
+          message : "You have successfully logged out! Login with your credentials",
+          type : "info",
+        } : false;
   req.session.destroy(function(err) {
     if(err) {
       console.log(err);
@@ -80,11 +85,7 @@ app.get('/logout',function(req,res){
       res.render('login', {
         pageTitle:"Login",
         errors : false,
-        signup : {
-          pre : null,
-          message : "You have successfully signed up! Login with your credentials",
-          type : "info",
-        },
+        alertBox : alertMessage,
         loggedIn : false
       });
     }

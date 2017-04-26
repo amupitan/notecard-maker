@@ -24,7 +24,7 @@ router.post('/login', function(request, response){
       response.render('login', {
     		pageTitle:"Login",
     		errors : err.message,
-    		signup : false,
+    		alertBox : false,
     		loggedIn : request.session.username
     	});
 
@@ -48,7 +48,7 @@ router.get('/login', function(request, response){
 	response.render('login', {
 		pageTitle:"Login",
 		errors: false,
-		signup : false,
+		alertBox : false,
 		loggedIn : request.session.username
 	});
 });
