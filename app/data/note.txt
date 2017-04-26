@@ -1,5 +1,33 @@
-#Notes
-$soccer
-soccer is good
-$b-ball
-b-ball is good
+!DATE: Jan 1 1970
+!CLASS: SE 319
+!PAGE: 1
+
+#Sports
+##Good sports
+$Soccer
+Soccer is a wonderful sport which is pretty much the *best* sport in the world. It is played by *over 200 countries*(which is all the countries in the world).
+
+Sizes of soccer balls: 1, 2, 3, 4, 5.
+
+$Basketball
+Players who play basketball:
+- Steph Curry
+- Russell Westbrook
+- James Harden
+- Lebron James
+
+The best college basketball teams in the country according to rank include:
+1) Iowa State *Cyclones
+2) Gonzaga
+3. Kansas
+4) University of North Carolina
+
+##Regular Sports
+$American Football
+American football is played in the USA. It has an *ironic name*.
+
+#Food
+Ingredients of making a smoothie include(mango, apple, oranges, ...).
+//I don't want this part of the note to be read
+
+The are a lot of restaurants in Ames. Some of the good ones include the Mexican ones. Fuzzy's tacos is lit! There's also some not so good ones.
