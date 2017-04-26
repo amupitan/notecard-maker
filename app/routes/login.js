@@ -10,37 +10,54 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.post('/login', function(request, response){
-  let userData = {username: request.body.username, password: request.body.password};
+router.post('/login', function(req, res){
+	if (req.session.username) res.redirect('/home');
+
+	var buttons= `<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>`;
+
+
+  let userData = {username: req.body.username, password: req.body.password};
   //TODO: sanitize data in line above
   db.login(userData, function(err, user){
     if (err){
-      response.render('login', {
+      res.render('login', {
     		pageTitle:"Login",
     		errors : err.message,
-    		signup : false
+    		signup : false,
+				butt: `${buttons}`
     	});
 
     }else{
-      request.session.username = user.username;
-      if (request.body.remember) request.session.cookie.maxAge = 30 * 86400000; //30 days
-      response.render('home', {
+			buttons=
+		   `<li><a href="/home"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+		  	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>`;
+      req.session.username = user.username;
+      if (req.body.remember) req.session.cookie.maxAge = 30 * 86400000; //30 days
+      res.render('home', {
         username: user.username,
   			pageTitle: `Welcome ${user.username}`,
   			email: user.email,
-  			numnotes: user.note_ids.length
+  			numnotes: user.note_ids.length,
+				butt: `${buttons}`
       });
     }
-    
+
   });
 });
 
 
-router.get('/login', function(request, response){
-	response.render('login', {
+router.get('/login', function(req, res){
+	if (req.session.username) res.redirect('/home');
+
+	var buttons= `<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>`;
+
+	res.render('login', {
 		pageTitle:"Login",
 		errors: false,
 		signup : false,
+		butt: `${buttons}`
 	});
 });
 

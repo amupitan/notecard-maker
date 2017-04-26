@@ -8,36 +8,46 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.get('/signup', function(request, response){
-	response.render('signup', {
+router.get('/signup', function(req, res){
+	if (req.session.username) res.redirect('/home');
+
+	var buttons= `<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+		<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>`;
+
+	res.render('signup', {
 			pageTitle:"Sign up",
 			errors: false,
+			butt: `${buttons}`
 	});
 });
 
-router.post('/signup', function(request, response){
-  //TODO: validations on all requests
-  if (request.body.password !== request.body.rpassword){
-    response.render('signup', {
+router.post('/signup', function(req, res){
+  //TODO: validations on all reqs
+		if (req.session.username) res.redirect('/home');
+		var buttons= `<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>`;
+  if (req.body.password !== req.body.rpassword){
+    res.render('signup', {
     		pageTitle:"Sign Up",
     		errors : "The passwords don't match"
     	});
   }
-  let userData = {username: request.body.username, password: request.body.password, email: request.body.email, first_name: request.body.first_name, last_name: request.body.last_name};
+  let userData = {username: req.body.username, password: req.body.password, email: req.body.email, first_name: req.body.first_name, last_name: req.body.last_name};
   db.addUser(userData, function(err, res){
     if(err){
-      response.render('signup', {
+      res.render('signup', {
     		pageTitle:"Sign Up",
     		errors : err.message
     	});
     }else{
-      response.render('login', {
+      res.render('login', {
     		pageTitle:"Login",
     		errors : false,
     		signup : {
     		  pre : "Congratulations!",
     		  message : "You have successfully signed up! Login with your credentials",
     		  type : "success",
+					butt: `${buttons}`
     		}
     	});
     }

@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dataFile = require('../data/description.json');
 
-
-router.get('/documentation',function(request,response){
+router.get('/documentation',function(req,res){
   var info='';
   dataFile.KeyCharacters.forEach(function(item){
     info+=`
@@ -16,21 +15,17 @@ router.get('/documentation',function(request,response){
       </div>
     `;
   });
-  response.render('documentation', {
+  var buttons= (req.session.username ?
+    `<li><a href="/home"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>`
+    :`<li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>`);
+
+  res.render('documentation', {
     pageTitle: "Documentation",
-        // rules:`<h1>RULES</h1>`,
-    info: `${info}`
+    info: `${info}`,
+    butt: `${buttons}`
+
   });
-
-    // response.send(`
-    //   <h1>RULES</h1>
-    //   ${info}
-    //   `);
-  // app.get('/documentation', function(req, res){
-  //   res.sendFile()
-  //   res.render('documentation');
-  // });
-
-
 });
 module.exports = router;
