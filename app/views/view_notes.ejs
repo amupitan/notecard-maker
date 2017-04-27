@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notecard-Maker-<%=pageTitle%></title>
+    <%include partials/head.ejs%>
+    <link rel="stylesheet" href="/css/notes.css" type="text/css">
+</head>
+<body>
+	<header>
+      <% include partials/header.ejs%>
+	</header>
+  <div class="container">
+    <nav>
+      <!--side nav bar-->
+    </nav>
+    <div class ="row">
+      <div class="col-sm-offset-2 col-sm-8 " >
+        <h1>Welcome <%= loggedIn %></h1>
+      </div>
+    </div>
+    <section class="col-xs-offset-4 col-sm-offset-0 col-lg-offset-1">
+      <p class="h3">Notes:</p>
+      <div class="row">
+        <div class="panel-group">
+          <% notes.forEach(function(note, i){%>
+          <div class="note col-xs-12 col-sm-6 col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-custom"><%- note.title %></div>
+              <div class="panel-body">
+                <ul>
+                  <li>Course: <%- note.course %></li>
+                  <li>Date: <%- note.date %></li>
+                  <li>Cards: <%- note.info.cards.length %></li>
+                  <li><a href="<%- note.url %>">Study</a></li>
+                </ul>
+              </div>
+            </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

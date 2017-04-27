@@ -25,6 +25,12 @@ class UserClass{
     return '/users/user/' + this._id;
   }
   
+  getNotes(callback){
+    Note.find({owner : this._id}, (err, notes) => {
+      callback && callback(err, notes);
+    });
+  }
+  
   static getUser(user_name, callback){
    mongoose.model('User', UserSchema).findOne({username: user_name}, callback); 
   }

@@ -20,7 +20,7 @@ router.post('/notes_upload', function(req, res) {
   noteFile.mv("./app/data/note.txt", function(err) {
     if (err)
       return res.status(500).send(err); //TODO: sending user error
-    res.redirect("/notes_study");
+    res.redirect("/notes");
     fs.readFile(filePath, 'UTF-8', (err, data) => {
         if (err) console.error(err);
         var np = new NoteParser(data);

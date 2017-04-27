@@ -25,6 +25,10 @@ class NoteClass{
   get cards(){
     return [...this.info.cards];
   }
+  
+  static getNote(id, callback){
+    mongoose.model('Note', NoteSchema).findOne({_id: id}, callback); 
+  }
 }
 
 NoteSchema.loadClass(NoteClass);

@@ -35,6 +35,7 @@ app.use(require("./routes/index"));
 app.use(require("./routes/signup"));
 app.use(require("./routes/login"));
 app.use(require("./routes/home"));
+app.use(require("./routes/view_notes"));
 // app.use(express.static('app/public'));
 app.use(express.static(__dirname + '/public'));
 
