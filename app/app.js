@@ -86,7 +86,8 @@ app.get('/logout',function(req,res){
         pageTitle:"Login",
         errors : false,
         alertBox : alertMessage,
-        loggedIn : false
+        loggedIn : false,
+        form : {},
       });
     }
   });

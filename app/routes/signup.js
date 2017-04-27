@@ -21,6 +21,7 @@ router.get('/signup', function(req, res){
 			pageTitle:"Sign up",
 			errors: false,
 			loggedIn : req.session.username,
+			form : {},
 	});
 });
 
@@ -32,7 +33,9 @@ router.post('/signup', function(req, res){
     		pageTitle:"Sign Up",
     		errors : "The passwords don't match",
     		loggedIn : req.session.username,
+    		form : req.body,
     	});
+    	return;
   }
   let userData = {username: req.body.username, password: req.body.password, email: req.body.email, first_name: req.body.first_name, last_name: req.body.last_name};
   db.addUser(userData, function(err, result){
@@ -41,6 +44,7 @@ router.post('/signup', function(req, res){
     		pageTitle:"Sign Up",
     		errors : err.message,
     		loggedIn : req.session.username,
+    		form : req.body,
     	});
     }else{
       res.render('login', {
@@ -52,6 +56,7 @@ router.post('/signup', function(req, res){
     		  type : "success",
     		},
     		loggedIn : req.session.username,
+    		form : {username: result.username},
     	});
     }
   });

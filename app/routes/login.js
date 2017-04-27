@@ -25,7 +25,8 @@ router.post('/login', function(request, response){
     		pageTitle:"Login",
     		errors : err.message,
     		alertBox : false,
-    		loggedIn : request.session.username
+    		loggedIn : request.session.username,
+    		form : request.body,
     	});
 
     }else{
@@ -49,7 +50,8 @@ router.get('/login', function(request, response){
 		pageTitle:"Login",
 		errors: false,
 		alertBox : false,
-		loggedIn : request.session.username
+		loggedIn : request.session.username,
+		form : request.body,
 	});
 });
 

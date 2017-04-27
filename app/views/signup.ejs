@@ -12,28 +12,30 @@
 			<% include partials/header.ejs %>
 	</header>
 	<div class="container">
-	  <% if (errors) { %>
-      <div class="errors">
-	      <%=errors%>
-	    </div>
-    <% } %>
+
 		<div class ="row top-buffer">
         <div class="col-md-offset-3 col-sm-8 col-md-6" >
           <p class="h2">Create a notecard account</p>
 					<form method="POST" action="/signup/">
 						<div class="form-group">
+						  <% if (errors) { %>
+  						  <div class="errors alert alert-danger%> alert-dismissable">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                  <strong><%=errors%></strong>
+                </div>
+              <% } %>
 						  <label for="firstname">First Name: </label>
-							<input type="username" class="form-control" id="usr" name="first_name">
+							<input type="username" class="form-control" id="first_name" name="first_name" value="<%= typeof form.first_name !== undefined ? form.first_name : '' %>">
 							<label for="username">Last Name: </label>
-							<input type="username" class="form-control" id="usr" name="last_name">
+							<input type="username" class="form-control" id="last_name" name="last_name" value="<%= typeof form.last_name !== undefined ? form.last_name : '' %>">
 							<label for="username">Username: </label>
-							<input type="username" class="form-control" id="usr" name="username">
+							<input type="username" class="form-control" id="username" name="username" value="<%= typeof form.username !== undefined ? form.username : '' %>">
 							<label for="email">Email Address: </label>
-							<input type="email" class="form-control" id="email" name="email">
+							<input type="email" class="form-control" id="email" name="email" value="<%= typeof form.email !== undefined ? form.email : '' %>">
 							<label for="pwd">Password: </label>
-							<input type="password" class="form-control" id="pwd" name="password">
+							<input type="password" class="form-control" id="pwd" name="password" value="<%= typeof form.password !== undefined ? form.password : '' %>">
 							<label for="pwd">Repeat Password: </label>
-							<input type="password" class="form-control" id="pwd2" name="rpassword">
+							<input type="password" class="form-control" id="pwd2" name="rpassword" value="<%= typeof form.rpassword !== undefined ? form.rpassword : '' %>">
 						</div>
 						<input type="submit" class="btn btn-primary" id="signup"></input>
 					</form>
