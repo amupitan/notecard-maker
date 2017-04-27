@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require("../../models/db.js");
+const db = require("../../models/users.js");
 
 const router = express.Router();
 
@@ -28,17 +28,10 @@ router.post('/login', function(request, response){
     		loggedIn : request.session.username,
     		form : request.body,
     	});
-
     }else{
       request.session.username = user.username;
       if (request.body.remember) request.session.cookie.maxAge = 30 * 86400000; //30 days
-      response.render('home', {
-        username: user.username,
-  			pageTitle: `Welcome ${user.username}`,
-  			email: user.email,
-  			numnotes: user.note_ids.length,
-  			loggedIn : request.session.username
-      });
+      response.redirect('/home');
     }
     
   });
