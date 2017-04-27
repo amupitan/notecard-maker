@@ -42,6 +42,7 @@
                 let panel = document.createElement('div');
                 panel.setAttribute('class', 'well well-sm col-xs-3');
                 panel.setAttribute('id', `box-${i}`);
+                panel.setAttribute('onclick', `check_div(${i})`);
                 select.appendChild(panel);
                 let check=document.createElement('input');
                 check.setAttribute("type", "checkbox");
@@ -57,6 +58,13 @@
           }
     });
   }
+
+  function check_div(num){
+      let curr_div =document.getElementById(`box-${num}`);
+      let el = curr_div.childNodes;
+      el[0].click();
+  }
+
   function checkAll(check){
     let num_elements=document.getElementById('ntc_sel_1').childNodes;
       for(let i =1; i<num_elements.length;i++){
@@ -74,11 +82,10 @@
         let num = i-1;
         let el = document.getElementById(`box-${num}`).childNodes;
         if(el[0].checked == true){
-          // console.log("front: " + el[0].parentNode.childNodes[1].innerHTML + " back: " + el[0].parentNode.childNodes[2].innerHTML);
           selected_notes.push([el[0].parentNode.childNodes[1].innerHTML, el[0].parentNode.childNodes[2].innerHTML]);
         }
       }
-      window.location.href = "notes_study";
+      // window.location.href = "notes_study";
       console.log(selected_notes);
   }
 
