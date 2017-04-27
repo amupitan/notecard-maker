@@ -85,8 +85,10 @@
           selected_notes.push([el[0].parentNode.childNodes[1].innerHTML, el[0].parentNode.childNodes[2].innerHTML]);
         }
       }
-      // window.location.href = "notes_study";
       console.log(selected_notes);
+      sessionStorage.setItem('notes_array', JSON.stringify(selected_notes));
+      window.location.href = "notes_study";
+
   }
 
   </script>
