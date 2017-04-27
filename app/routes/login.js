@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require("../../models/users.js");
+const User = require("../../models/users.js");
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.all('/login', (req, res, next) => {
 router.post('/login', function(request, response){
   let userData = {username: request.body.username, password: request.body.password};
   //TODO: sanitize data in line above
-  db.login(userData, function(err, user){
+  User.login(userData, function(err, user){
     if (err){
       response.render('login', {
     		pageTitle:"Login",

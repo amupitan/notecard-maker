@@ -2,8 +2,13 @@ const express = require('express');
 const reload = require('reload');
 const session = require('express-session');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const NoteParser = require('./parser');
 const app = express();
+
+mongoose.connect('mongodb://127.0.0.1/np'); //np database
+var db = mongoose.connection; //default connection
+db.on('error', console.error.bind(console, 'MongoDB connection error:')); //console log mongo errors
 
 const filePath = "./app/data/note.txt";
 const bodyParser = require('body-parser'); //Parse through req
@@ -54,7 +59,7 @@ app.get('/notecards', function(req,res){
 app.get('/create', (req, res) => {
   res.render('notes_upload', {
 		errors : false,
-		loggedIn : req.session.username //TODO: this should always be true since the user has to be logged in 
+		loggedIn : req.session.username //TODO: this should always be true since the user has to be logged in
 	});
 });
 

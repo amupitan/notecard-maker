@@ -4,26 +4,29 @@ const Schema = mongoose.Schema;
 
 const NoteSchema = Schema(
   {
-    title : {type: String, required: true, maxlength: 100},
+    title : {type: String, maxlength: 100, default: "untitled"},
     course: {type: String, required: true, maxlength: 100},
     date_created: {type: Date, default: Date.now},
     owner: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    info : {}
   }
 );
 
-// Virtual for user's full name
-NoteSchema
-.virtual('date')
-.get(function () {
-  return (new Date(this.date_created)).toDateString();
-});
 
-// Virtual for user's URL
-NoteSchema
-.virtual('url')
-.get(function () {
-  return '/notes/note/' + this._id;
-});
+class NoteClass{
+  get date(){
+    return (new Date(this.date_created)).toDateString();
+  }
+  
+  get url(){
+    return '/notes/note/' + this._id;
+  }
+  
+  get cards(){
+    return [...this.info.cards];
+  }
+}
 
-//Export model
+NoteSchema.loadClass(NoteClass);
+
 module.exports = mongoose.model('Note', NoteSchema);

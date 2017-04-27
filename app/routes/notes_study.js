@@ -17,6 +17,7 @@ router.get('/notes_study', function(req, res){
     		  type : "danger",
     		},
     		loggedIn : req.session.username,
+    		form : {},
     	});
   }
 });
