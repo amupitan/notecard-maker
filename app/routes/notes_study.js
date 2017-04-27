@@ -8,17 +8,7 @@ router.get('/notes_study', function(req, res){
 			loggedIn : req.session.username,
 	});
 }else if(!req.session.username){
-    res.render('login', {
-    		pageTitle:"Login",
-    		errors : false,
-    		alertBox : {
-    		  pre : "Error!",
-    		  message : "You have to sign in first",
-    		  type : "danger",
-    		},
-    		loggedIn : req.session.username,
-    		form : {},
-    	});
+    return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
   } else {
 		res.render('notes_select', {
 			pageTitle:"Select",

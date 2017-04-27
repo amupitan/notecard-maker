@@ -4,6 +4,13 @@ const Note = require("../../models/notes.js");
 
 const router = express.Router();
 
+router.all(/(^(\/notes)\/?$)|(\/notes\/)/, (req, res, next) => { //matches: /notes, /notes/, /notes/*
+  if (!req.session.username)
+    return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
+  else
+    next();
+});
+
 router.get('/notes', (req, res) => {
   if (req.session.username){
     // let note_arr = [];

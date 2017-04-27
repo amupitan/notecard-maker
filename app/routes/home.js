@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/home', function(req, res){
   if (req.session.username === undefined) 
-    res.redirect("/login"); //TODO: pull the else render from notes_study. Put it in appData to avoid duplication of codd
+    return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
   else{
     res.render('home', {
       username: req.session.username,

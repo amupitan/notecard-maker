@@ -14,6 +14,8 @@ router.use(bodyParser.json());
 router.use(fileUpload());
 
 router.post('/notes_upload', function(req, res) {
+  if (!req.session.username)
+    return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
   let noteFile = req.files.noteFile;
