@@ -18,7 +18,9 @@ class NoteParser{
     this.cards = [];
     this.lines = note_data.split('\n').filter((line) => {
       return line.trim().length > 0 && !line.startsWith('//');
-    });
+    }).map((line) => {
+      return line.split(".").join('\uFF0E');
+    }); //consider .reduce() vs .filter() & .map()
     this.grammar = {
       '!' : (data) => {
         return this.note._meta[data.substring(1, data.indexOf(':'))] = data.substr(data.indexOf(':') + 1).trim();
@@ -101,7 +103,7 @@ class NoteParser{
           this.pointer = i - 1;
         }else{
           let strList = data.substring(idx + 1);
-          if (strList.charAt(strList.length - 1) === '.') strList = strList.substring(0, strList.length - 1);
+          if (strList.charAt(strList.length - 1) === '\uFF0E') strList = strList.substring(0, strList.length - 1);
           this.note.lists[topic] = strList.split(',').map(item => {return item.trim()});
           return true;
         }
