@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 //import models
 const User = require('./users');
+const Note = require('./notes');
 
 var bcrypt = require('bcrypt');
 //Set up default mongoose connection
