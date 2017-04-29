@@ -12,35 +12,38 @@ router.all(/(^(\/notes)\/?$)|(\/notes\/)/, (req, res, next) => { //matches: /not
 });
 
 router.get('/notes', (req, res) => {
-  if (req.session.username){
-    // let note_arr = [];
-    User.getUser(req.session.username, (err, user) => { //TODO: change this to get notes from Note not User. $where owner == username
+  User.getUser(req.session.username, (err, user) => {
+    if (err) console.error(err);
+    user.getNotes((err, notes) => {
       if (err) console.error(err);
-      user.getNotes((err, notes) => {
-        if (err) console.error(err);
-        res.render('view_notes', {
-          username: req.session.username,
-        	pageTitle: `Notes`,
-          notes : notes,
-          loggedIn : req.session.username,
-        });
+      res.render('view_notes', {
+        username: req.session.username,
+      	pageTitle: `Notes`,
+        notes : notes,
+        loggedIn : req.session.username,
       });
     });
-  }else{
-    res.redirect('/login'); //TODO: pull the else render from notes_study. Put it in appData to avoid duplication of code
-  }
+  });
 });
 
-router.get('/notes/note/:nid', (req, res) => { //TODO: actually render note page
+router.get('/notes/note/:nid', (req, res) => {
   Note.getNote(req.params.nid, (err, note) => {
     if (err) console.error(err);
-    res.end(
-    `Note Title: ${note.title}
-     Note Date: ${note.date}
-     Note Course: ${note.course}`
-           );
+    if ((err && err.name === 'CastError') || (note.owner.username !== req.session.username)){
+      return res.status(400).send("Hmm! We can't find that note. You can double check the url");
+    }
+    if (req.query.course === 'true') {
+      res.json(note.course);
+    }else if (req.query.cards === 'true'){
+      res.json(note.cards); 
+    }else{
+      res.render('notes_select', {
+  			pageTitle:`Select | ${note.title}`,
+  			card_url : " ",
+  			loggedIn : req.session.username,
+  	  });
+    }
   });
-  
 });
 
 module.exports = router;

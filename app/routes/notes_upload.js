@@ -15,14 +15,13 @@ router.use(fileUpload());
 
 router.post('/notes_upload', function(req, res) {
   if (!req.session.username)
-    return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
+    return res.redirect('/login?error=true&after=' + encodeURIComponent('/create'));
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
   let noteFile = req.files.noteFile;
   noteFile.mv("./app/data/note.txt", function(err) {
     if (err)
       return res.status(500).send(err); //TODO: sending user error
-    res.redirect("/notes");
     fs.readFile(filePath, 'UTF-8', (err, data) => {
         if (err) console.error(err);
         var np = new NoteParser(data);
@@ -36,6 +35,7 @@ router.post('/notes_upload', function(req, res) {
            }); //user can be undefined only if the user was removed from the database after the user logged in (deleted their account)
          });
     });
+    res.redirect("/notes"); //display stub for new note if it doesn't display yet
   });
 });
 

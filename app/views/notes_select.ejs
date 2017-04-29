@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Notecard-Maker -<%=pageTitle %> </title>
+    <title><%=pageTitle %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="./css/main.css"> -->
 		<%include partials/head.ejs%>
@@ -18,6 +18,7 @@
         <div class="col-sm-12" id="ntc_sel_1" >
 				</div>
 		</div>
+		<input type="hidden" id="card_url" value="<%- card_url %>">
     <input type="button" class="btn btn-info" value="Uncheck All" onclick="checkAll(false)" id="uncheck" >
     <input type="button" class="btn btn-info" value="Check All" onclick="checkAll(true)"id="check" >
 		<input type="button" class="btn btn-info" value="Study" id="go_study" onclick="compile_checked()" >
@@ -33,8 +34,8 @@
   window.onload =function(){
     let select = document.getElementById('ntc_sel_1');
     $.ajax({
-          url : "/notecards/",
-          data : {"name" : "notecards"},
+          url : $("#card_url").value,
+          data : {"name" : "notecards", "cards" : "true"},
           success : function(res){
             console.log(typeof(res));
             console.log(res);
@@ -87,7 +88,7 @@
       }
       console.log(selected_notes);
       sessionStorage.setItem('notes_array', JSON.stringify(selected_notes));
-      window.location.href = "notes_study";
+      window.location.href = "/notes_study";
 
   }
 

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const NoteSchema = Schema(
   {
-    title : {type: String, maxlength: 100, default: "untitled"},
+    title : {type: String, maxlength: 100, required: true},
     course: {type: String, required: true, maxlength: 100},
     date_created: {type: Date, default: Date.now},
     owner: {type: Schema.Types.ObjectId, ref: 'User', required: true},
@@ -27,7 +27,7 @@ class NoteClass{
   }
   
   static getNote(id, callback){
-    mongoose.model('Note', NoteSchema).findOne({_id: id}, callback); 
+    this.findOne({_id: id}).populate('owner').exec(callback); 
   }
 }
 

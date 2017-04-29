@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const NoteParser = require('./parser');
 const app = express();
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/np'); //np database
 var db = mongoose.connection; //default connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:')); //console log mongo errors

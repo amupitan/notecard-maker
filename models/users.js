@@ -31,8 +31,24 @@ class UserClass{
     });
   }
   
+  addNotes(note, callback){
+    let noteData = {
+      title : note.title || note.note._meta.TITLE || `untitled-${Math.random().toString(36).substr(2,9)}`,
+      course : note.course || note.note._meta.CLASS,
+      date_created : note.note._meta.DATE,
+      owner : this,
+      info : Object.assign(note, note.note._meta.page && {page : note.note._meta.page}),
+    };
+    delete note.note._meta;
+
+    Note.create(noteData, (err, new_note) => {
+      callback && callback(err, new_note);
+    });
+    
+  }
+  
   static getUser(user_name, callback){
-   mongoose.model('User', UserSchema).findOne({username: user_name}, callback); 
+   this.findOne({username: user_name}, callback); 
   }
   
   static addUser(userInfo, callback){
@@ -96,21 +112,7 @@ class UserClass{
     });
   }
   
-  addNotes(note, callback){
-    let noteData = {
-      title : note.title || note.note._meta.TITLE,
-      course : note.course || note.note._meta.CLASS,
-      date_created : note.note._meta.DATE,
-      owner : this,
-      info : Object.assign(note, note.note._meta.page && {page : note.note._meta.page}),
-    };
-    delete note.note._meta;
-
-    Note.create(noteData, (err, new_note) => {
-      callback && callback(err, new_note);
-    });
-    
-  }
+  
 }
 
 UserSchema.loadClass(UserClass);

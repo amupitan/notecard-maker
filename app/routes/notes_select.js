@@ -6,6 +6,7 @@ router.get('/notes_select', function(req, res){
     return res.redirect('/login?error=true&after=' + encodeURIComponent(req.originalUrl));
 	res.render('notes_select', {
 			pageTitle:"Select",
+			card_url : "/notecards",
 			loggedIn : req.session.username,
 	});
 });
