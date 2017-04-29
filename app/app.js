@@ -32,6 +32,7 @@ app.use(require('./routes/notes_upload'));
 app.use(require('./routes/notes_study'));
 app.use(require('./routes/notes_select'));
 app.use(require("./routes/index"));
+app.use(require("./routes/account"));
 // app.use(require('./routes/notecards'));
 app.use(require("./routes/signup"));
 app.use(require("./routes/login"));

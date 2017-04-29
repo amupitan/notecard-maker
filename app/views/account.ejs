@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Notecard-Maker-<%=pageTitle%></title>
+    <title><%=pageTitle%> | Account</title>
     <%include partials/head.ejs%>
     <link rel="stylesheet" href="/css/form.css" type="text/css">
 </head>
@@ -12,11 +12,10 @@
 			<% include partials/header.ejs %>
 	</header>
 	<div class="container">
-
 		<div class ="row top-buffer">
         <div class="col-md-offset-3 col-sm-8 col-md-6" >
-          <p class="h2">Create a notecard account</p>
-					<form method="POST" action="/signup">
+          <p class="h2">Update your notecard account</p>
+					<form method="POST" action="/account">
 						<div class="form-group">
 						  <% if (errors) { %>
   						  <div class="errors alert alert-danger%> alert-dismissable">
@@ -26,20 +25,26 @@
               <% } %>
 						  <label for="firstname">First Name: </label>
 							<input type="username" class="form-control" id="first_name" name="first_name" value="<%= typeof form.first_name !== undefined ? form.first_name : '' %>">
+							<br />
 							<label for="username">Last Name: </label>
 							<input type="username" class="form-control" id="last_name" name="last_name" value="<%= typeof form.last_name !== undefined ? form.last_name : '' %>">
+							<br />
 							<label for="username">Username: </label>
 							<input type="username" class="form-control" id="username" name="username" value="<%= typeof form.username !== undefined ? form.username : '' %>">
+							<br />
 							<label for="email">Email Address: </label>
 							<input type="email" class="form-control" id="email" name="email" value="<%= typeof form.email !== undefined ? form.email : '' %>">
-							<label for="pwd">Password: </label>
-							<input type="password" class="form-control" id="pwd" name="password" value="<%= typeof form.password !== undefined ? form.password : '' %>">
-							<label for="pwd">Repeat Password: </label>
-							<input type="password" class="form-control" id="pwd2" name="rpassword" value="<%= typeof form.rpassword !== undefined ? form.rpassword : '' %>">
+							<br />
+							<label for="pwd">New Password: </label>
+							<input type="password" class="form-control" id="pwd" name="password" value="">
+							<br />
+							<label for="pwd">Repeat New Password: </label>
+							<input type="password" class="form-control" id="pwd2" name="rpassword" value="">
+							<br />
 						</div>
 						<input type="submit" class="btn btn-primary" id="signup">
+						<a href="/home?message=same" class="btn btn-default">Cancel</a>
 					</form>
-					<small class="form-text text-muted">Already have an account? <a href="/login">Login!</a></small>
 				</div>
 		</div>
 	</div>

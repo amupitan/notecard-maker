@@ -47,6 +47,23 @@ class UserClass{
     
   }
   
+  update(userData, callback){
+    this.username = userData.username;
+    this.first_name = userData.first_name;
+    this.last_name = userData.last_name;
+    this.email = userData.email;
+    var _this = this;
+    if (userData.password) {
+      bcrypt.hash(userData.password, 10, function(err, hash){
+        if (err) 
+          console.error(err);
+        _this.password = hash;
+        _this.save(callback);
+
+      });
+    }else this.save(callback);
+  }
+  
   static getUser(user_name, callback){
    this.findOne({username: user_name}, callback); 
   }
@@ -56,16 +73,17 @@ class UserClass{
       if (!userExists){
         let userM = mongoose.model('User', UserSchema);
         if (userInfo.password.length === 0)
-          callback({name: "ValidationError", errno : -4, message: "Password field cannot be empty"}, null);
+          callback && callback({name: "ValidationError", errno : -4, message: "Password field cannot be empty"}, null);
         else if (userM.schema.tree.password.minlength && userInfo.password.length < userM.schema.tree.password.minlength[0])
-          callback({name: "ValidationError", errno : -5, message: `Password has to be at least ${userM.schema.tree.password.minlength[0]} characters long` }, null);
+          callback && callback({name: "ValidationError", errno : -5, message: `Password has to be at least ${userM.schema.tree.password.minlength[0]} characters long` }, null);
         else{
           bcrypt.hash(userInfo.password, 10, function(err, hash){
+            if (err)
+              console.error(err);
             userInfo.password = hash;
             mongoose.model('User', UserSchema).create(userInfo, (err, new_user) => {
               if (err) console.error(err);
-              console.log(new_user);
-              callback(err, new_user);//TODO: might not want to return user
+              callback && callback(err, new_user);
             });
           });
         }
@@ -108,7 +126,7 @@ class UserClass{
   static exists(userData, callback){
     this.count({username : userData.username}, (err, count) => {
       if (err) console.error(err);
-      callback(count >= 1);
+      callback && callback(count >= 1);
     });
   }
   

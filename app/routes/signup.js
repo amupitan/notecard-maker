@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const db = require("../../models/users.js");
+const User = require("../../models/users.js");
 
 router.use(bodyParser.urlencoded({
   extended: true
@@ -16,7 +16,6 @@ router.all('/signup', (req, res, next) => {
 });
 
 router.get('/signup', function(req, res){
-	if (req.session.username) res.redirect('/home');
 	res.render('signup', {
 			pageTitle:"Sign up",
 			errors: false,
@@ -27,7 +26,6 @@ router.get('/signup', function(req, res){
 
 router.post('/signup', function(req, res){
   //TODO: validations on all reqs
-		if (req.session.username) res.redirect('/home');
   if (req.body.password !== req.body.rpassword){
     res.render('signup', {
     		pageTitle:"Sign Up",
@@ -38,7 +36,7 @@ router.post('/signup', function(req, res){
     	return;
   }
   let userData = {username: req.body.username, password: req.body.password, email: req.body.email, first_name: req.body.first_name, last_name: req.body.last_name};
-  db.addUser(userData, function(err, result){
+  User.addUser(userData, function(err, result){
     if(err){
       res.render('signup', {
     		pageTitle:"Sign Up",
@@ -60,7 +58,6 @@ router.post('/signup', function(req, res){
     	});
     }
   });
-
 });
 
 module.exports = router;

@@ -21,6 +21,12 @@
         <h1>Welcome <%= fullName %></h1>
       </div>
     </div>
+    <% if (alertBox && alertBox.message) { %>
+      <div class="alert alert-<%=alertBox.type%> alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong><%=alertBox.pre%></strong> <%=alertBox.message%>
+      </div>
+    <% } %>
     <section class="col-xs-offset-4 col-sm-offset-0 col-lg-offset-1">
       <div class="row ">
         <div class="col-sm-offset-2 col-sm-4 options top-buffer-xs">
@@ -40,5 +46,6 @@
       </div>
     </section>
   </div>
+  <%include partials/foot.ejs%>
 </body>
 </html>
