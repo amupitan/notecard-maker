@@ -34,8 +34,8 @@ router.post('/login', function(request, response){
     	});
     }else{
       request.session.username = user.username;
+      request.session.fullName = user.name;
       if (request.body.remember) request.session.cookie.maxAge = 30 * 86400000; //30 days
-      
       response.redirect(request.query.after || '/home');
     }
     

@@ -8,9 +8,7 @@ router.get('/home', function(req, res){
   else{
     res.render('home', {
       username: req.session.username,
-    	pageTitle: `Welcome `,
-    	email: "email",
-    	numnotes: 10,
+    	fullName: req.session.fullName,
       loggedIn : req.session.username,
     });
   }
